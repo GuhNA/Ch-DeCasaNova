@@ -1,3 +1,26 @@
+# Como rodar o backend
+O backend todo roda em containers do Docker, por isso é importante ter o docker instalado localmente, todas as demais dependencias serão gerenciadas por ele.
+
+## Como subir o banco de dados
+
+Para subir o banco de dados se utilizado o seguinte comando no terminal:
+```
+docker compose up -d flask_db
+```
+Com isso, é para estar rodando um container com postgres na sua porta 5432.
+O Docker ira criar um volume permanete para você, caso queira deletar tudo, lembre-se de deletar o volume também.
+
+## Como subir a API
+
+Para iniciar o container com a API, você deve executar o comando abaixo:
+```
+docker compose up --build flask_app
+```
+Com este comando, a API estará rodando no `localhost:4000` e o seu terminal estara preso nos logs do servidor, isso é bom para ver logs de erro.
+Porem se quiser apenas iniciar o container sem travar o terminal, adicione um `-d` no commando.
+
+# Escopo do projeto
+
 O sistema web terá duas telas podendo ser selecionadas via navbar.
 - Página inicial
 - Lista de presentes
