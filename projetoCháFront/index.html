@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cha De Casa Nova</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+    <div id="lista">
+        <table id="listaPresentes">
+            <thead>
+                <tr>
+                    <th scope="col">Imagem</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Preço</th>
+                    <!--<th scope="col">QRCode</th>-->
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <button onclick="abrirPopup()">Adicionar</button>
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <label for="produto">Produto:</label>
+            <input type="text" maxlength="59" id="produto" class="borderEffect" placeholder="Nome do produto"><br>
+            <label for="imagemProduto">Imagem:</label>
+            <input type="file" id="imagemProduto" accept="image/*"><br>
+            <label for="valorProduto">Valor:</label>
+            <input type="text" id="valorProduto" class="borderEffect" placeholder="R$ 0,00" oninput="formatarMoeda(this)"><br>
+            <button onclick="addPresente()" id="botao">Adicionar</button>
+            <button onclick="fecharPopup()">Fechar</button>
+        </div>
+    </div>
+    <script src="tables.js"></script>
+</body>
+</html>
