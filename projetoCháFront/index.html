@@ -8,18 +8,19 @@
 </head>
 <body>
     <div id="lista">
-        <table id="listaPresentes">
+        <table>
             <thead>
                 <tr>
-                    <th scope="col">Imagem</th>
                     <th scope="col">Produto</th>
+                    <th scope="col">Nome</th>
                     <th scope="col">Preço</th>
-                    <!--<th scope="col">QRCode</th>-->
+                    <th scope="col">QR Code</th>
                 </tr>
             </thead>
+            <tbody id="listaPresentes"></tbody>
         </table>
     </div>
-    <button onclick="abrirPopup()">Adicionar</button>
+    <button onclick="abrirPopup(this)" id="add">Adicionar</button>
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
             <label for="produto">Produto:</label>
@@ -28,7 +29,9 @@
             <input type="file" id="imagemProduto" accept="image/*"><br>
             <label for="valorProduto">Valor:</label>
             <input type="text" id="valorProduto" class="borderEffect" placeholder="R$ 0,00" oninput="formatarMoeda(this)"><br>
-            <button onclick="addPresente()" id="botao">Adicionar</button>
+            <label for="qrCode">QrCode:</label>
+            <input type="file" id="qrCode" accept="image/*"><br>
+            <button id="metamorfo"></button>
             <button onclick="fecharPopup()">Fechar</button>
         </div>
     </div>

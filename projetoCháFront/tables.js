@@ -1,5 +1,19 @@
 
-const listaPresente = document.getElementById("listaPresentes"); //table
+const listaPresente = document.getElementById("listaPresentes"); //tbody
+
+function passarImagem(cell, imagem)
+{
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        cell.innerHTML="";
+        let img = document.createElement("img");
+        img.src = e.target.result;
+        img.width = 120;
+        img.height = 120;
+        cell.appendChild(img);
+    }
+    reader.readAsDataURL(imagem);
+}
 
 function addPresente()
 {
@@ -7,49 +21,42 @@ function addPresente()
     let imagemProduto= document.getElementById("imagemProduto");
     let nomeProduto= document.getElementById("produto").value;
     let valorProduto= document.getElementById("valorProduto").value;
+    let qrCodeProduto = document.getElementById("qrCode");
 
     //Verifica se todos os campos estão preenchidos
-    if (valorProduto === "" || nomeProduto === "" || !imagemProduto.files.length) {
+    if (valorProduto === "" || nomeProduto === "" || !imagemProduto.files.length || !qrCodeProduto.files.length) {
         alert("Por favor, preencha todos os campos e selecione uma foto.");
         return;
     }
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        let linha = listaPresente.insertRow();
 
-        let img = linha.insertCell(0);
-        let imagem = document.createElement("img");
-        imagem.src = e.target.result;
-        img.appendChild(imagem);
+    let linha = listaPresente.insertRow();
+    let imgCell = linha.insertCell(0);
+    passarImagem(imgCell,imagemProduto.files[0]);
 
-        let nome = linha.insertCell(1);
-        nome.innerHTML = nomeProduto;
+    let nome = linha.insertCell(1);
+    nome.textContent = nomeProduto;
 
-        let valor = linha.insertCell(2);
-        valor.innerHTML = valorProduto;
-        linha.innerHTML +=
-        `<td class="backgroundOff">
-            <button onclick="attPresente()">Editar</button>
-            <button onclick="removePresente()">Remover</button>
-        </td>`
-        /*let edit = linha.insertCell(3);
-        edit.innerHTML = 
-        `<button onclick="attPresente()">Editar</button>
-        <button onclick="removePresente()">Remover</button>`*/
-        //Limpar dados
-        document.getElementById("produto").value = "";
-        document.getElementById("valorProduto").value = "";
-        document.getElementById("imagemProduto").value = "";
+    let valor = linha.insertCell(2);
+    valor.textContent = valorProduto;
 
-    }
+    let qrCodeCell = linha.insertCell(3);
+    passarImagem(qrCodeCell, qrCodeProduto.files[0]);
 
+    let acaoCell = linha.insertCell(4);
+    acaoCell.classList.add("backgroundOff")
 
-    reader.readAsDataURL(imagemProduto.files[0]);
+    //Atualizar a forma como é criado o botão, utilizar a forma do abrirPopup()
+    acaoCell.innerHTML = `
+        <button onclick="abrirPopup(this)">Editar</button>
+        <button onclick="removePresente(this)">Remover</button>
+    `;
+
+    document.getElementById("produto").value = "";
+    document.getElementById("valorProduto").value = "";
+    document.getElementById("imagemProduto").value = "";
+    document.getElementById("qrCode").value = "";
 
     document.getElementById('popup').style.display = 'none';
-
-
-
 }
 
 function fecharPopup()
@@ -57,12 +64,52 @@ function fecharPopup()
     document.getElementById('popup').style.display = 'none';
 }
 
-function removePresente(button)
+function attPresente(button)
 {
+    let linha = button.closest("tr");
 
+    let imagemProduto= document.getElementById("imagemProduto");
+    let nomeProduto= document.getElementById("produto").value;
+    let valorProduto= document.getElementById("valorProduto").value;
+    let qrCodeProduto = document.getElementById("qrCode");
+
+    //Verifica se todos os campos estão preenchidos
+    if (valorProduto === "" || nomeProduto === "" || !imagemProduto.files.length || !qrCodeProduto.files.length) {
+        alert("Por favor, preencha todos os campos e selecione uma foto.");
+        return;
+    }
+    
+    passarImagem(linha.cells[0],imagemProduto.files[0]);
+    linha.cells[1].textContent = nomeProduto;
+    linha.cells[2].textContent = valorProduto;
+    passarImagem(linha.cells[3],qrCodeProduto.files[0]);
+    
+    document.getElementById("produto").value = "";
+    document.getElementById("valorProduto").value = "";
+    document.getElementById("imagemProduto").value = "";
+    document.getElementById("qrCode").value = "";
+
+    document.getElementById('popup').style.display = 'none';
 }
-function abrirPopup() {
 
+function abrirPopup(button, linha) {
+    botao = document.getElementById("metamorfo")
+    if(button.id === "add")
+    {
+        botao.textContent = "Adicionar";
+        botao.onclick = function()
+        {
+            addPresente();
+        }
+    }
+    else
+    {
+        botao.textContent = "Editar";
+        botao.onclick = function() 
+        {
+            attPresente(linha);
+        }
+    }
     document.getElementById('popup').style.display = 'flex';
 }
 

@@ -6,6 +6,7 @@ body {
 
     td {
         width:300px;
+        background-color: #fff;
     }
     #lista {
     border-collapse: collapse;
@@ -25,14 +26,12 @@ body {
         text-align: center;
     }
 
-    #lista td img {
-        width: 220px; 
-        border-radius: 8px; 
-        object-fit: cover;s
-    }
-
-    #lista tr:nth-child(even) {
-        background-color: #f9f9f9;
+    table img {
+        max-width: 120px;
+        max-height: 120px; 
+        object-fit: contain; 
+        display: block;    
+        margin: 0 auto; 
     }
 
     .backgroundOff{
