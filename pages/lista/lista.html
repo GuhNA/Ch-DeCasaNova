@@ -4,20 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cha De Casa Nova</title>
+    <link rel="stylesheet" href="..\..\css\style.css"/>
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+    <nav>
+        <div class="navbar_left">
+            <a href="../../index.html">Página Inicial</a>
+            <a href="./lista.html">Lista</a>
+        </div>
+        <div class="navbar_right">
+            <a href="../auth.html">Entrar</a>
+        </div>
+    </nav>
     <aside>
         <div id="menuTabela">
             <button id="QRCODE" onclick="abrirPopup(this)" class="botaoMenu">Adicione QR Code</button>
             <img id="QrCodeImg">
-            <img src="icon\edit.svg" alt="Ícone adicionar" class="icon" id="edit">
+            <img src="..\..\images\icon\edit.svg" alt="Ícone adicionar" class="icon" id="edit">
             <button id="add" onclick="abrirPopup(this)" class="botaoMenu">Adicionar presente</button>
-            <img src="icon\Plus circle.svg" alt="Ícone adicionar" class="icon" id="circle">
+            <img src="..\..\images\icon\Plus circle.svg" alt="Ícone adicionar" class="icon" id="circle">
             <button id="verPresente" class="botaoMenu">Ver presentes recebidos</button>
-            <img src="icon\Heart.svg" alt="Ícone presentes" class="icon" id="heart">
+            <img src="..\..\images\icon\Heart.svg" alt="Ícone presentes" class="icon" id="heart">
             <button id="share" class="botaoMenu">Compartilhe com convidados</button>
-            <img src="icon\Link.svg" alt="Ícone link" class="icon" id="link">
+            <img src="..\..\images\icon\Link.svg" alt="Ícone link" class="icon" id="link">
         </div>
     </aside>
     <div id="lista">
