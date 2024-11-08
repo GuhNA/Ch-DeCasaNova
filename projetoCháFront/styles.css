@@ -13,15 +13,13 @@ body {
     width: 80%;
     margin: 30px auto;
     padding: 20px;
-    background-color: #980000;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     }
 
     #lista th {
-        background-color: #d41515;
-        color: #ffffff;
+        color: #000000;
         padding: 12px 20px;
         text-align: center;
     }
@@ -34,9 +32,12 @@ body {
         margin: 0 auto; 
     }
 
-    .backgroundOff{
-        background-color: #980000;
+    .icon
+    {
+        max-width: 10px;
+        max-height: 10px;
     }
+
     h1 {
     text-align: center;
     }

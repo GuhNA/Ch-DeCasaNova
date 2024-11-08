@@ -43,13 +43,17 @@ function addPresente()
     passarImagem(qrCodeCell, qrCodeProduto.files[0]);
 
     let acaoCell = linha.insertCell(4);
-    acaoCell.classList.add("backgroundOff")
+    //acaoCell.classList.add("backgroundOff")
 
-    //Atualizar a forma como é criado o botão, utilizar a forma do abrirPopup()
-    acaoCell.innerHTML = `
-        <button onclick="abrirPopup(this)">Editar</button>
-        <button onclick="removePresente(this)">Remover</button>
-    `;
+    let editButton = document.createElement("button");
+    editButton.textContent = "Editar";
+    editButton.onclick = () => abrirPopup(editButton, linha)
+    acaoCell.appendChild(editButton);
+
+    removeButton = document.createElement("button");
+    removeButton.textContent = "Remover";
+    removeButton.onclick = () => listaPresente.removeChild(linha);
+    acaoCell.appendChild(removeButton);
 
     document.getElementById("produto").value = "";
     document.getElementById("valorProduto").value = "";
@@ -59,15 +63,8 @@ function addPresente()
     document.getElementById('popup').style.display = 'none';
 }
 
-function fecharPopup()
+function attPresente(linha)
 {
-    document.getElementById('popup').style.display = 'none';
-}
-
-function attPresente(button)
-{
-    let linha = button.closest("tr");
-
     let imagemProduto= document.getElementById("imagemProduto");
     let nomeProduto= document.getElementById("produto").value;
     let valorProduto= document.getElementById("valorProduto").value;
@@ -92,6 +89,7 @@ function attPresente(button)
     document.getElementById('popup').style.display = 'none';
 }
 
+
 function abrirPopup(button, linha) {
     botao = document.getElementById("metamorfo")
     if(button.id === "add")
@@ -113,6 +111,10 @@ function abrirPopup(button, linha) {
     document.getElementById('popup').style.display = 'flex';
 }
 
+function fecharPopup()
+{
+    document.getElementById('popup').style.display = 'none';
+}
 
 //Formatando moeda
 function formatarMoeda(input) {
