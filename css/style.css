@@ -1,0 +1,167 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+nav img{
+    width: 100px;
+    height: auto;
+}
+
+.navbar_left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar_left a {
+    padding: 5px 10px;
+    margin: 0px 15px;
+    font-size: 20px;
+    background-color: #e7d7ee;
+    border-radius: 10px;
+    color: #2e2b2b;
+    text-decoration: none;
+}
+
+.navbar_right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar_right a {
+    padding: 5px 10px;
+    margin: 0px 15px;
+    font-size: 20px;
+    background-color: #e7d7ee;
+    border-radius: 10px;
+    color: #2e2b2b;
+    text-decoration: none;
+}
+
+.imagem_destaque {
+    width: auto;
+    height: auto;
+}
+
+.imagem_destaque img {
+    width: 100%;
+    height: 60%;
+}
+
+.div_desc {
+    padding: 25px;
+    background-color: #d9e0df;
+
+}
+
+.descricao {
+    margin: 50px 75px;
+    padding: 10px 65px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.descricao p {
+    padding: 0px 250px;
+    word-break: break-word;
+}
+
+.galeria {
+    margin: 25px;
+    background-color: #eff2f2;
+}
+
+.galeria_item {
+    align-items: center;
+    float: left;
+    width: 33.33%;
+}
+
+.galeria_item img {
+    width: 40%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+
+.galeria_item p {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 20px;
+    padding: 0px 150px;
+    word-break: break-word;
+}
+
+.div_auth,
+.div_register {
+    margin: 100px 350px;
+    width: 150px 150px 150px 0px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input_group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    margin: 25px 0px;
+    width: 100%;
+    height: 40px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+p {
+    margin-top: 10px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #4CAF50;
+}
+
+a:hover {
+    color: #3e8e41;
+}
