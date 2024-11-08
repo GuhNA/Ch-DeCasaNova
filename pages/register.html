@@ -11,6 +11,12 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
+<script>
+    function redirect_page() {
+        location.replace("./auth.html")
+    }
+</script>
+
 <body>
     <nav>
         <div class="navbar_left">
@@ -19,28 +25,37 @@
         </div>
         <div class="navbar_right">
             <a href="./auth.html">Entrar</a>
-            <a href="./register.html">Cadastro</a>
         </div>
     </nav>
-    
-    <div class="div_register">
-        <section>
-            Cadastro
+
+    <section>
+        <img src="../images/img_login.jpg" id="background">
+
+        <div class="div_register">
+            <img src="../images/logo.svg" id="logo">
+            <h2>Preencha os campos abaixo para realizar seu cadastro!</h2>
             <form class="form_floating">
-                <br><br>
+
                 <label for="email_input">Email:</label>
                 <input type="email" class="form_control" id="email_input" placeholder="Digite seu email aqui">
-                <br>
+
                 <label for="name_input">Nome:</label>
                 <input type="text" class="form_control" id="name_input" placeholder="Digite o nome do casal aqui">
-                <br>
+
                 <label for="pw_input">Senha:</label>
                 <input type="password" class="form_control" id="pw_input" placeholder="Digite sua senha aqui">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required >
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Li e concordo com a <a href="">política de privacidade</a>
+                    </label>
+                </div>
 
-                <button type="submit">Cadastrar</button>
+                <button type="button" class="btn btn-primary" onclick="redirect_page()">Cadastrar</button>
             </form>
-        </section>
-    </div>
+        </div>
+    </section>
+
 
 </body>
 

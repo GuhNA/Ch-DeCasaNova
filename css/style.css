@@ -13,7 +13,8 @@ nav {
     background-color: #333;
     color: #fff;
 }
-nav img{
+
+nav img {
     width: 100px;
     height: auto;
 }
@@ -46,6 +47,16 @@ nav img{
     border-radius: 10px;
     color: #2e2b2b;
     text-decoration: none;
+}
+
+section {
+    position: relative;
+    margin: 0 auto;
+}
+
+section>img {
+    width: 100%;
+    object-fit: fill;
 }
 
 .imagem_destaque {
@@ -104,15 +115,32 @@ nav img{
     word-break: break-word;
 }
 
+#background {
+    opacity: 0.85;
+}
+
 .div_auth,
 .div_register {
-    margin: 100px 350px;
-    width: 150px 150px 150px 0px;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    background-color: rgba(255, 255, 255, 0.767);
+    /* Fundo semi-transparente */
+    padding: 2rem;
+    width: 80%;
+    max-width: 400px;
+    z-index: 1;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.div_auth,
+.div_register>img {
+    width: 50%;
+    height: auto;
+    z-index: 1;
 }
 
 form {
@@ -120,13 +148,17 @@ form {
     flex-direction: column;
 }
 
+.form_control{
+    margin-bottom: 5px;
+}
+
 .input_group {
     margin-bottom: 15px;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
+    text-align: start;
+    margin: 5px 0px;
 }
 
 input {
@@ -137,24 +169,14 @@ input {
     border-radius: 5px;
 }
 
-button[type="submit"] {
-    margin: 25px 0px;
-    width: 100%;
-    height: 40px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #3e8e41;
+button[type=button] {
+    margin: 10px 5px;
 }
 
 p {
-    margin-top: 10px;
+    margin: 5px;
     text-align: center;
+    padding: 0px;
 }
 
 a {
