@@ -21,13 +21,13 @@
         <div id="menuTabela">
             <button id="QRCODE" onclick="abrirPopup(this)" class="botaoMenu">Adicione QR Code</button>
             <img id="QrCodeImg">
-            <img src="..\..\images\icon\edit.svg" alt="Ícone adicionar" class="icon" id="edit">
+            <img src="..\..\images\icon\edit.svg" onclick="document.getElementById('QRCODE').click()" alt="Ícone adicionar" class="icon" id="edit">
             <button id="add" onclick="abrirPopup(this)" class="botaoMenu">Adicionar presente</button>
-            <img src="..\..\images\icon\Plus circle.svg" alt="Ícone adicionar" class="icon" id="circle">
+            <img src="..\..\images\icon\Plus circle.svg" onclick="document.getElementById('add').click()" alt="Ícone adicionar" class="icon" id="circle">
             <button id="verPresente" class="botaoMenu">Ver presentes recebidos</button>
-            <img src="..\..\images\icon\Heart.svg" alt="Ícone presentes" class="icon" id="heart">
+            <img src="..\..\images\icon\Heart.svg" onclick="document.getElementById('verPresente').click()" alt="Ícone presentes" class="icon" id="heart">
             <button id="share" class="botaoMenu">Compartilhe com convidados</button>
-            <img src="..\..\images\icon\Link.svg" alt="Ícone link" class="icon" id="link">
+            <img src="..\..\images\icon\Link.svg" onclick="document.getElementById('share').click()" alt="Ícone link" class="icon" id="link">
         </div>
     </aside>
     <div id="lista">
