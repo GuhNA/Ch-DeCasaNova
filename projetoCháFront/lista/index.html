@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+    <aside>
+        <div id="menuTabela">
+            <button id="QRCODE" onclick="abrirPopup(this)" class="botaoMenu">Adicione QR Code</button>
+            <img id="QrCodeImg">
+            <img src="icon\edit.svg" alt="Ícone adicionar" class="icon" id="edit">
+            <button id="add" onclick="abrirPopup(this)" class="botaoMenu">Adicionar presente</button>
+            <img src="icon\Plus circle.svg" alt="Ícone adicionar" class="icon" id="circle">
+            <button id="verPresente" class="botaoMenu">Ver presentes recebidos</button>
+            <img src="icon\Heart.svg" alt="Ícone presentes" class="icon" id="heart">
+            <button id="share" class="botaoMenu">Compartilhe com convidados</button>
+            <img src="icon\Link.svg" alt="Ícone link" class="icon" id="link">
+        </div>
+    </aside>
     <div id="lista">
         <table>
             <thead>
@@ -14,13 +27,11 @@
                     <th scope="col">Produto</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Preço</th>
-                    <th scope="col">QR Code</th>
                 </tr>
             </thead>
             <tbody id="listaPresentes"></tbody>
         </table>
     </div>
-    <button onclick="abrirPopup(this)" id="add">Adicionar</button>
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
             <label for="produto">Produto:</label>
@@ -29,10 +40,14 @@
             <input type="file" id="imagemProduto" accept="image/*"><br>
             <label for="valorProduto">Valor:</label>
             <input type="text" id="valorProduto" class="borderEffect" placeholder="R$ 0,00" oninput="formatarMoeda(this)"><br>
+            <button id="metamorfo"></button>
+            <button onclick="fecharPopup(0)">Fechar</button>
+        </div>
+        <div class="popup-content">
             <label for="qrCode">QrCode:</label>
             <input type="file" id="qrCode" accept="image/*"><br>
-            <button id="metamorfo"></button>
-            <button onclick="fecharPopup()">Fechar</button>
+            <button onclick="addQrCode()">Adicionar</button>
+            <button onclick="fecharPopup(1)">Fechar</button>
         </div>
     </div>
     <script src="tables.js"></script>

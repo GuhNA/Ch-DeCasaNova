@@ -21,10 +21,9 @@ function addPresente()
     let imagemProduto= document.getElementById("imagemProduto");
     let nomeProduto= document.getElementById("produto").value;
     let valorProduto= document.getElementById("valorProduto").value;
-    let qrCodeProduto = document.getElementById("qrCode");
 
     //Verifica se todos os campos estão preenchidos
-    if (valorProduto === "" || nomeProduto === "" || !imagemProduto.files.length || !qrCodeProduto.files.length) {
+    if (valorProduto === "" || nomeProduto === "" || !imagemProduto.files.length) {
         alert("Por favor, preencha todos os campos e selecione uma foto.");
         return;
     }
@@ -39,10 +38,7 @@ function addPresente()
     let valor = linha.insertCell(2);
     valor.textContent = valorProduto;
 
-    let qrCodeCell = linha.insertCell(3);
-    passarImagem(qrCodeCell, qrCodeProduto.files[0]);
-
-    let acaoCell = linha.insertCell(4);
+    let acaoCell = linha.insertCell(3);
     //acaoCell.classList.add("backgroundOff")
 
     let editButton = document.createElement("button");
@@ -60,6 +56,7 @@ function addPresente()
     document.getElementById("imagemProduto").value = "";
     document.getElementById("qrCode").value = "";
 
+    document.getElementsByClassName("popup-content")[0].style.display = "none";
     document.getElementById('popup').style.display = 'none';
 }
 
@@ -68,10 +65,9 @@ function attPresente(linha)
     let imagemProduto= document.getElementById("imagemProduto");
     let nomeProduto= document.getElementById("produto").value;
     let valorProduto= document.getElementById("valorProduto").value;
-    let qrCodeProduto = document.getElementById("qrCode");
 
     //Verifica se todos os campos estão preenchidos
-    if (valorProduto === "" || nomeProduto === "" || !imagemProduto.files.length || !qrCodeProduto.files.length) {
+    if (valorProduto === "" || nomeProduto === "" || !imagemProduto.files.length) {
         alert("Por favor, preencha todos os campos e selecione uma foto.");
         return;
     }
@@ -79,16 +75,40 @@ function attPresente(linha)
     passarImagem(linha.cells[0],imagemProduto.files[0]);
     linha.cells[1].textContent = nomeProduto;
     linha.cells[2].textContent = valorProduto;
-    passarImagem(linha.cells[3],qrCodeProduto.files[0]);
     
     document.getElementById("produto").value = "";
     document.getElementById("valorProduto").value = "";
     document.getElementById("imagemProduto").value = "";
-    document.getElementById("qrCode").value = "";
 
+    document.getElementsByClassName("popup-content")[0].style.display ="none";
     document.getElementById('popup').style.display = 'none';
 }
 
+function addQrCode()
+{
+    
+    let imagem = document.getElementById("qrCode");
+
+    if (!imagem.files.length) {
+        alert("Por favor, preencha todos os campos e selecione uma foto.");
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        let img = document.getElementById("QrCodeImg");
+        img.src = e.target.result;
+        img.width = 120;
+        img.height = 120;
+    }
+    reader.readAsDataURL(imagem.files[0]);
+
+    document.getElementById("QRCODE").textContent = "Editar QR Code";
+    document.getElementById("qrCode").value = "";
+
+    document.getElementsByClassName("popup-content")[1].style.display = "none";
+    document.getElementById('popup').style.display = 'none';
+
+}
 
 function abrirPopup(button, linha) {
     botao = document.getElementById("metamorfo")
@@ -99,6 +119,11 @@ function abrirPopup(button, linha) {
         {
             addPresente();
         }
+        document.getElementsByClassName("popup-content")[0].style.display = "block";
+    }
+    else if(button.id === "QRCODE")
+    {
+        document.getElementsByClassName("popup-content")[1].style.display = "block";
     }
     else
     {
@@ -107,12 +132,14 @@ function abrirPopup(button, linha) {
         {
             attPresente(linha);
         }
+        document.getElementsByClassName("popup-content")[0].style.display = "block";
     }
     document.getElementById('popup').style.display = 'flex';
 }
 
-function fecharPopup()
+function fecharPopup(index)
 {
+    document.getElementsByClassName("popup-content")[index].style.display ="none";
     document.getElementById('popup').style.display = 'none';
 }
 
