@@ -187,3 +187,8 @@ a {
 a:hover {
     color: #3e8e41;
 }
+
+#message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
