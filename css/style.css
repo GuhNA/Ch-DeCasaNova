@@ -148,7 +148,7 @@ form {
     flex-direction: column;
 }
 
-.form_control{
+.form_control {
     margin-bottom: 5px;
 }
 
@@ -191,4 +191,4 @@ a:hover {
 #message {
     margin-top: 1rem;
     font-size: 0.9rem;
-  }
+}
