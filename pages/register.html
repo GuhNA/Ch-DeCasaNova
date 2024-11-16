@@ -28,19 +28,17 @@
         };
 
         // Fazer a requisição POST com axios
-        axios.post("http://localhost/user", requestData)
+        axios.post("http://localhost:8080/api/housewarming-party/user", requestData)
             .then(response => {
                 document.getElementById('message').textContent = 'Usuário cadastrado com sucesso!';
                 document.getElementById('message').style.color = 'green';
-                window.location.href = "/auth.html";
+                window.location.href = "./auth.html";
             })
             .catch(error => {
                 document.getElementById('message').textContent = 'Erro ao cadastrar usuário.';
                 document.getElementById('message').style.color = 'red';
                 console.error(error);
             });
-
-            window.location.href = "http://www.w3schools.com";
     }
 </script>
 
