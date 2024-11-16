@@ -7,6 +7,11 @@ services:
     ports:
       - "8080:8080"
     environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://site_db:5432/housewarming_party
+      DB_HOST: jdbc:postgresql://site_db:5432/housewarming_party
+      DB_NAME: housewarming_party
+      DB_USERNAME: site_application
+      DB_PASSWORD: password
       SPRING_PROFILES_ACTIVE: dev
     depends_on:
       - site_db
@@ -19,7 +24,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=site_application
-      - POSTGRES_DB=cha_de_casa_nova
+      - POSTGRES_DB=housewarming_party
     volumes:
       - pgdata:/var/lib/postgresql/data
 

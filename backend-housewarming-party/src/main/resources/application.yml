@@ -1,5 +1,5 @@
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ak12kj431l24hksjhdflka21l4
 
 spring:
   application:
@@ -8,7 +8,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -16,9 +16,9 @@ spring:
         time_zone: UTC
   datasource:
     driverClassName: org.postgresql.Driver
-    url: "jdbc:postgresql://localhost:5432/cha_de_casa_nova"
-    username: site_application
-    password: password
+    url: "jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}"
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       minimumIdle: 1
       maximum-pool-size: 5
