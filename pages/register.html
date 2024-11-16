@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-6.5.2-web/css/all.min.css">
 </head>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="script.js"></script>
 
 <script>
     function redirect_page() {
@@ -19,25 +18,33 @@
         const name = document.getElementById("name_input").value;
         const email = document.getElementById("email_input").value;
         const password = document.getElementById("pw_input").value;
+        const pix = document.getElementById("pix_input").value;
 
         // Configurar o corpo da requisição
         const requestData = {
             name: name,
             email: email,
-            password: password
+            password: password,
+            pix: pix
         };
 
         // Fazer a requisição POST com axios
         axios.post("http://localhost:8080/api/housewarming-party/user", requestData)
             .then(response => {
-                document.getElementById('message').textContent = 'Usuário cadastrado com sucesso!';
-                document.getElementById('message').style.color = 'green';
-                window.location.href = "./auth.html";
+                const status = response.status
+                if (status == 200 || status == 201) {
+                    document.getElementById('message').textContent = 'Usuário cadastrado com sucesso!';
+                    document.getElementById('message').style.color = 'green';
+                    window.location.href = '../pages/lista/lista.html';
+                } else {
+                    throw new Error('Token não encontrado nos headers');
+                }
             })
             .catch(error => {
                 document.getElementById('message').textContent = 'Erro ao cadastrar usuário.';
                 document.getElementById('message').style.color = 'red';
                 console.error(error);
+                window.location.href = './register.html';
             });
     }
 </script>
@@ -71,7 +78,8 @@
                         <div class="field">
                             <div class="control">
                                 <p class="control has-icons-left has-icons-right">
-                                    <input class="input" type="text" placeholder="Digite o nome do casal aqui" id="name_input" required>
+                                    <input class="input" type="text" placeholder="Digite o nome do casal aqui"
+                                        id="name_input" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -80,7 +88,8 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left has-icons-right">
-                                <input class="input" type="email" placeholder="Digite seu email aqui" id="email_input" required>
+                                <input class="input" type="email" placeholder="Digite seu email aqui" id="email_input"
+                                    required>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-envelope"></i>
                                 </span>
@@ -91,11 +100,20 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" placeholder="Digite sua senha aqui" id="pw_input" required>
+                                <input class="input" type="password" placeholder="Digite sua senha aqui" id="pw_input"
+                                    required>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
                                 </span>
                             </p>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <p class="control">
+                                    <input class="input" type="text" placeholder="Digite sua chave PIX" id="pix_input"
+                                        required>
+                                </p>
+                            </div>
                         </div>
                         <div class="field">
                             <p class="control">

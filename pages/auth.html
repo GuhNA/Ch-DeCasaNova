@@ -28,22 +28,22 @@
     function login() {
         const username = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-    
+
         if (!username || !password) {
             document.getElementById('message').textContent = 'Por favor, preencha todos os campos.';
             document.getElementById('message').style.color = 'red';
             return;
         }
-    
+
         const requestData = { username, password };
-        
+
         axios.post('http://localhost:8080/api/housewarming-party/authenticate', requestData)
             .then(response => {
                 const token = response.headers['authorization'];
                 if (token) {
                     // Armazena o token no localStorage
                     localStorage.setItem('authToken', token);
-    
+
                     // Decodifica o token (se necessário) e salva informações adicionais
                     try {
                         const decoded = jwtDecode(token);
@@ -51,7 +51,7 @@
                     } catch (err) {
                         console.error('Erro ao decodificar o token:', err);
                     }
-    
+
                     // Redireciona para outra página
                     window.location.href = '../pages/lista/lista.html';
                 } else {
@@ -116,9 +116,10 @@
                             </p>
                         </div>
                         <p class='subtitle is-6'>Não tem conta? <a href="./register.html">Cadastre-se</a></p>
-                        <p class='subtitle is-6'>Esqueceu a senha?<button class="button is-text mybtn" onclick="RecuperarSenha()">Recuperar</button></p>
+                        <p class='subtitle is-6'>Esqueceu a senha?<button class="button is-text mybtn"
+                                onclick="RecuperarSenha()">Recuperar</button></p>
 
-                                
+
                     </form>
                     <div id="message"></div>
 
