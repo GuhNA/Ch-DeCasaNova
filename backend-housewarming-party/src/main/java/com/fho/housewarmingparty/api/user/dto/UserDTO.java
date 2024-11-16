@@ -24,4 +24,8 @@ public class UserDTO {
     @NotBlank
     @Size(min = 4)
     private String password;
+
+    @NotNull
+    @NotBlank
+    private String pixKey;
 }

@@ -28,7 +28,7 @@ public class UserController implements UserApi {
     @Override
     public ResponseEntity<?> create(@Valid @RequestBody UserDTO dto) {
         log.info("Creating user. Payload: {}.", dto.getEmail());
-        service.create(mapper.toEntity(dto));
+        service.create(dto);
         return ResponseEntity.ok("User created successfully.");
     }
 

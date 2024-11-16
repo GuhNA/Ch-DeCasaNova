@@ -7,6 +7,7 @@ import com.fho.housewarmingparty.api.configuration.repository.ConfigurationRepos
 import com.fho.housewarmingparty.api.image.entity.Image;
 import com.fho.housewarmingparty.api.image.entity.ImageType;
 import com.fho.housewarmingparty.api.image.service.ImageService;
+import com.fho.housewarmingparty.api.user.entity.User;
 import com.fho.housewarmingparty.api.user.service.UserService;
 import com.fho.housewarmingparty.exception.ResourceNotFoundException;
 import com.fho.housewarmingparty.security.authentication.LoggedUser;
@@ -54,5 +55,13 @@ public class ConfigurationService {
     public Configuration findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(messageSource, Configuration.class, id));
+    }
+
+    public void createDefaultConfiguration(User user, String pixKey) {
+        Configuration configuration = new Configuration();
+        configuration.setUser(user);
+        configuration.setPixKey(pixKey);
+
+        repository.save(configuration);
     }
 }

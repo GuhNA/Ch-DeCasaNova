@@ -6,8 +6,14 @@ import com.fho.housewarmingparty.api.image.entity.Image;
 import com.fho.housewarmingparty.api.product.entity.ProductStatus;
 import com.fho.housewarmingparty.api.user.entity.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class ProductDTO {
 
