@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fho.housewarmingparty.api.product.dto.ProductCriteria;
 import com.fho.housewarmingparty.api.product.dto.ProductDTO;
+import com.fho.housewarmingparty.api.product.entity.Product;
 import com.fho.housewarmingparty.api.product.entity.ProductStatus;
 import com.fho.housewarmingparty.api.product.mapper.ProductMapper;
 import com.fho.housewarmingparty.api.product.service.ProductService;
@@ -41,6 +42,16 @@ public class ProductController {
     public ProductDTO create(@Valid @RequestBody ProductDTO dto) {
         log.info("Adding new product.");
         return mapper.toWithoutImageDto(service.create(dto));
+    }
+
+    @PostMapping("batch")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Add a new products", description = "Adds new products and returns its details")
+    public List<ProductDTO> createBatch(@Valid @RequestBody List<ProductDTO> dtos) {
+        log.info("Adding new products.");
+        List<Product> products = service.createBatch(dtos);
+        return products.stream().map(mapper::toWithoutImageDto)
+                .toList();
     }
 
     @PutMapping("{id}")

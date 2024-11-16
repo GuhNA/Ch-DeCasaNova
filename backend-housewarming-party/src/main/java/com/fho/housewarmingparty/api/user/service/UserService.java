@@ -2,12 +2,17 @@ package com.fho.housewarmingparty.api.user.service;
 
 import static java.lang.String.format;
 
+import com.fho.housewarmingparty.api.configuration.service.ConfigurationService;
+import com.fho.housewarmingparty.api.product.service.ProductService;
+import com.fho.housewarmingparty.api.user.dto.UserDTO;
 import com.fho.housewarmingparty.api.user.entity.User;
+import com.fho.housewarmingparty.api.user.mapper.UserMapper;
 import com.fho.housewarmingparty.api.user.repository.UserRepository;
 import com.fho.housewarmingparty.exception.ConflictException;
 import com.fho.housewarmingparty.exception.ErrorCode;
 import com.fho.housewarmingparty.exception.ResourceNotFoundException;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,21 +22,36 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
     private final MessageSource messageSource;
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final ConfigurationService configurationService;
+    private final ProductService productService;
+    private final UserMapper mapper;
+
+    public UserService(MessageSource messageSource, UserRepository repository, PasswordEncoder passwordEncoder, @Lazy ConfigurationService configurationService,  @Lazy ProductService productService, UserMapper mapper) {
+        this.messageSource = messageSource;
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.configurationService = configurationService;
+        this.productService = productService;
+        this.mapper = mapper;
+    }
 
     @Transactional
-    public void create(User entity) {
+    public void create(UserDTO dto) {
+        User entity = mapper.toEntity(dto);
         validateUniqueness(entity, null);
 
         String hashedPassword = passwordEncoder.encode(entity.getPassword());
         entity.setPassword(hashedPassword);
 
         User user = repository.save(entity);
+
+        configurationService.createDefaultConfiguration(user, dto.getPixKey());
+        productService.createDefaultProducts(user);
 
         log.info("Successfully created user '{}'.", user.getId());
     }

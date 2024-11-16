@@ -45,8 +45,10 @@ public class ProductService {
         Product product = mapper.toEntity(dto);
         product.setStatus(ProductStatus.AVAILABLE);
 
-        User user = userService.findById(LoggedUser.getLoggedInUserId());
-        product.setUser(user);
+        if (dto.getUser() == null) {
+            User user = userService.findById(LoggedUser.getLoggedInUserId());
+            product.setUser(user);
+        }
 
         if (dto.getBase64Image() != null && dto.getImage() == null) {
             Image image = imageService.create(dto.getBase64Image(), ImageType.PRODUCT);
@@ -55,7 +57,8 @@ public class ProductService {
             product.setImage(imageService.findById(dto.getImage().getId()));
         }
 
-        Configuration userConfig = configurationService.findByUserId(LoggedUser.getLoggedInUserId());
+        Long userId = dto.getUser() != null ? dto.getUser().getId() : LoggedUser.getLoggedInUserId();
+        Configuration userConfig = configurationService.findByUserId(userId);
         if (userConfig == null || userConfig.getPixKey() == null) {
             throw new IllegalArgumentException("User Pix configuration is missing");
         }
@@ -71,6 +74,10 @@ public class ProductService {
         product.setQrCodeImage(qrCodeBase64);
 
         return repository.save(product);
+    }
+
+    public List<Product> createBatch(List<ProductDTO> dtos) {
+        return dtos.stream().map(this::create).toList();
     }
 
     public Product update(Long id, ProductDTO dto) {
@@ -114,5 +121,15 @@ public class ProductService {
         return str.length() > 20
                 ? str.substring(0, 20).trim()
                 : str;
+    }
+
+    public void createDefaultProducts(User user) {
+        List<ProductDTO> products = List.of(
+                ProductDTO.builder().name("Cadeira 1").price(BigDecimal.valueOf(100)).user(user).description("My description").base64Image("My base64Image").build(),
+                ProductDTO.builder().name("Cadeira 2").price(BigDecimal.valueOf(100)).user(user).description("My description").base64Image("My base64Image").build(),
+                ProductDTO.builder().name("Cadeira 3").price(BigDecimal.valueOf(100)).user(user).description("My description").base64Image("My base64Image").build()
+        );
+
+        createBatch(products);
     }
 }
