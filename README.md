@@ -1,22 +1,28 @@
 # Como rodar o backend
 O backend todo roda em containers do Docker, por isso é importante ter o docker instalado localmente, todas as demais dependencias serão gerenciadas por ele.
 
+## Requisitos
+- Java SDK 17
+
 ## Como subir o banco de dados
 
 Para subir o banco de dados se utilizado o seguinte comando no terminal:
 ```
-docker compose up -d flask_db
+docker compose up -d site_db
 ```
 Com isso, é para estar rodando um container com postgres na sua porta 5432.
 O Docker ira criar um volume permanete para você, caso queira deletar tudo, lembre-se de deletar o volume também.
+
+## Buildar Applicação Java
+Em seguida, é necessário buildar o arquivo `.jar` da applicação.
 
 ## Como subir a API
 
 Para iniciar o container com a API, você deve executar o comando abaixo:
 ```
-docker compose up --build flask_app
+docker compose up --build spring_boot_api
 ```
-Com este comando, a API estará rodando no `localhost:4000` e o seu terminal estara preso nos logs do servidor, isso é bom para ver logs de erro.
+Com este comando, a API estará rodando no `localhost:8080` e o seu terminal estara preso nos logs do servidor, isso é bom para ver logs de erro.
 Porem se quiser apenas iniciar o container sem travar o terminal, adicione um `-d` no commando.
 
 # Escopo do projeto
