@@ -12,7 +12,8 @@
 </head>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
 <script>
     function RecuperarSenha() {
         email = prompt("Insira seu email de cadastro para recuperar a conta.");
@@ -20,30 +21,87 @@
             alert(`Seu email foi encaminhado para a equipe responsável, em breve retornaremos o contatando no email ${email}.`)
     }
 
-    function login() {
-        console.log('asd1');
+    function login(){
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-
-        // Configurar o corpo da requisição
-        const requestData = {
-            email: email,
-            password: password
-        };
-
-        axios.post('http://localhost/login', requestData)
-            .then(response => {
-                console.log('asd1');
-                document.getElementById('message').textContent = 'Login bem-sucedido!';
-                document.getElementById('message').style.color = 'green';
+        try {
+            const response = axios.post('http://localhost:8080/api/house-warming-party/authenticate', {
+                username: email,
+                password: password
             })
-            .catch(error => {
-                console.log('asd1');
-                document.getElementById('message').textContent = 'Erro ao fazer login. Verifique as credenciais.';
-                document.getElementById('message').style.color = 'red';
-                console.error(error);
-            });
+            const token = response.headers['authorization']
+            if (token) {
+                localStorage.setItem('authToken', token)
+
+                const decoded = jwtDecode(token)
+                localStorage.setItem('name', decoded.name)
+
+                username.value = decoded.name
+                console.log('asdasds')
+                location.href("./../index.html")
+            } else {
+                console.error('Authorization token not found in headers')
+            }
+        } catch (error) {
+            console.error('Login failed:', error)
+        }
+
     }
+
+
+    export default {
+        data() {
+            return {
+                email: '',
+                password: '',
+                errorMessage: '',
+            };
+        },
+        methods: {
+            async login() {
+                try {
+                    const response = await axios.post('/authenticate', {
+                        email: this.email,
+                        password: this.password,
+                    });
+
+                    // Armazenar o token retornado no header "Authorization"
+                    const token = response.headers['authorization'];
+
+                    if (token) {
+                        localStorage.setItem('token', token); // Armazenar o token para uso posterior
+                        this.$router.push('/home'); // Redirecionar para a página inicial ou dashboard
+                    } else {
+                        throw new Error('Token não recebido');
+                    }
+                } catch (error) {
+                    this.errorMessage = 'Erro ao fazer login. Verifique suas credenciais.';
+                }
+            },
+        },
+    };
+
+    // Configurar interceptor
+    axios.interceptors.request.use((config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers['Authorization'] = token;
+        }
+        return config;
+    }, (error) => {
+        return Promise.reject(error);
+    });
+
+    axios.interceptors.response.use(
+        (response) => response,
+        (error) => {
+            if (error.response && error.response.status === 401) {
+                localStorage.removeItem('token'); // Remover o token inválido
+                window.location.href = '/login'; // Redirecionar para o login
+            }
+            return Promise.reject(error);
+        }
+    );
 </script>
 
 <body>
@@ -73,7 +131,7 @@
                         <br>
                         <div class="field">
                             <p class="control has-icons-left has-icons-right">
-                                <input class="input" type="email" placeholder="Email">
+                                <input class="input" type="email" placeholder="Email" id="email" required>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-envelope"></i>
                                 </span>
@@ -84,7 +142,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" placeholder="Password">
+                                <input class="input" type="password" placeholder="Password" id="password" required>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
                                 </span>
@@ -92,15 +150,14 @@
                         </div>
                         <div class="field">
                             <p class="control">
-                                <button class="button is-success">
+                                <button class="button is-success" onclick="login()">
                                     Entrar
                                 </button>
                             </p>
                         </div>
                         <p class='subtitle is-6'>Não tem conta? <a href="./register.html">Cadastre-se</a></p>
-                        <p class='subtitle is-6'>Esqueceu a senha?<button class="button is-text mybtn" onclick="RecuperarSenha()">Recuperar</button></p>
-
-                                
+                        <p class='subtitle is-6'>Esqueceu a senha?<button class="button is-text mybtn"
+                                onclick="RecuperarSenha()">Recuperar</button></p>
                     </form>
                     <div id="message"></div>
 
