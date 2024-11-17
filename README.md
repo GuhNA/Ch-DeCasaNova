@@ -15,7 +15,9 @@ O Docker ira criar um volume permanete para você, caso queira deletar tudo, lem
 
 ## Buildar Applicação Java
 Em seguida, é necessário buildar o arquivo `.jar` da applicação.
-
+```
+./mvnw clean package -DskipTests
+```
 ## Como subir a API
 
 Para iniciar o container com a API, você deve executar o comando abaixo:
