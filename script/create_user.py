@@ -13,7 +13,7 @@ try:
     response = requests.post(url, headers=headers, json=data)
     if response.status_code == 200:
         print("Usuário criado com sucesso!")
-        print("Resposta:", response.json())
+        print("Resposta:", response.text)
     else:
         print(f"Erro ao criar usuário: {response.status_code}")
         print("Detalhes:", response.text)
