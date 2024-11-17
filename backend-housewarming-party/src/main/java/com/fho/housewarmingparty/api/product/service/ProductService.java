@@ -89,7 +89,7 @@ public class ProductService {
 
     public Product findById(Long id) {
         log.info("Finding product with ID: {}.", id);
-        return repository.findByIdAndUserId(id, LoggedUser.getLoggedInUserId())
+        return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(messageSource, Product.class, id));
     }
 
