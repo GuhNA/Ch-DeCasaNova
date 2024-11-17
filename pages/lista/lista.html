@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-6.5.2-web/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 </head>
 <body>
         <!-- Cabeçalho e navegação -->
@@ -28,14 +29,12 @@
         </header>
     <aside>
         <div id="menuTabela">
-            <button id="QRCODE" onclick="abrirPopup(this)" class="botaoMenu">Adicione QR Code</button>
             <img id="QrCodeImg">
-            <img src="..\..\images\icon\edit.svg" onclick="document.getElementById('QRCODE').click()" alt="Ícone adicionar" class="icon" id="edit">
             <button id="add" onclick="abrirPopup(this)" class="botaoMenu">Adicionar presente</button>
             <img src="..\..\images\icon\Plus circle.svg" onclick="document.getElementById('add').click()" alt="Ícone adicionar" class="icon" id="circle">
             <button id="verPresente" class="botaoMenu">Ver presentes recebidos</button>
             <img src="..\..\images\icon\Heart.svg" onclick="document.getElementById('verPresente').click()" alt="Ícone presentes" class="icon" id="heart">
-            <button id="share" class="botaoMenu">Compartilhe com convidados</button>
+            <button id="share" class="botaoMenu" onclick="copiarUrlAtual()">Compartilhe com convidados</button>
             <img src="..\..\images\icon\Link.svg" onclick="document.getElementById('share').click()" alt="Ícone link" class="icon" id="link">
         </div>
     </aside>
@@ -81,5 +80,6 @@
         </div>
     </div>
     <script src="tables.js"></script>
+    <script src="qr_code_generator.js"></script>
 </body>
 </html>
