@@ -11,17 +11,20 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-6.5.2-web/css/all.min.css">
 </head>
 <body>
-    <div>
-        <nav class="navbar">
-            <div class="navbar_left">
-                <a href="../../index.html">Página Inicial</a>
-                <a href="./lista.html">Lista</a>
-            </div>
-            <div class="navbar_right">
-                <a href="../auth.html">Entrar</a>
-            </div>
-        </nav>
-    </div>
+        <!-- Cabeçalho e navegação -->
+        <header>
+            <nav class="navbar" role="navigation" aria-label="menu de navegação">
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="../../index.html">Página Inicial</a>
+                        <a class="navbar-item" href="./lista.html">Lista</a>
+                    </div>
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="../auth.html">Entrar</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
     <aside>
         <div id="menuTabela">
             <button id="QRCODE" onclick="abrirPopup(this)" class="botaoMenu">Adicione QR Code</button>
