@@ -54,10 +54,27 @@ function populateProductTable(products) {
         const removeButton = document.createElement("button");
         removeButton.textContent = "Remover";
         removeButton.className = "button is-danger is-small";
-        removeButton.onclick = () => listaPresente.deleteRow(row.rowIndex - 1); // Remove a linha da tabela
+        removeButton.onclick = () => removeProduct(product.id, row); // Chama a função para remover
         actionCell.appendChild(removeButton);
     });
 }
+
+function removeProduct(productId, row) {
+    const url = `http://localhost:8080/api/housewarming-party/product/${productId}`;
+
+    if (confirm("Tem certeza de que deseja remover este produto?")) {
+        axios.delete(url)
+            .then(() => {
+                alert("Produto removido com sucesso!");
+                row.remove(); // Remove a linha da tabela após sucesso na remoção
+            })
+            .catch(error => {
+                console.error("Erro ao remover o produto:", error);
+                alert("Não foi possível remover o produto. Tente novamente.");
+            });
+    }
+}
+
 
 const listaPresente = document.getElementById("listaPresentes"); //tbody
 
