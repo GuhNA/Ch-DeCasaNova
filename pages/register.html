@@ -13,7 +13,10 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-    function redirect_page() {
+    function redirect_page(event) {
+        // Prevenir comportamento padrão do botão
+        event.preventDefault();
+
         // Obter os valores dos inputs
         const name = document.getElementById("name_input").value;
         const email = document.getElementById("email_input").value;
@@ -31,20 +34,17 @@
         // Fazer a requisição POST com axios
         axios.post("http://localhost:8080/api/housewarming-party/user", requestData)
             .then(response => {
-                const status = response.status
-                if (status == 200 || status == 201) {
+                if (response.status === 200 || response.status === 201) {
                     document.getElementById('message').textContent = 'Usuário cadastrado com sucesso!';
                     document.getElementById('message').style.color = 'green';
-                    window.location.href = '../pages/lista/lista.html';
-                } else {
-                    throw new Error('Token não encontrado nos headers');
+                    // Redirecionar para a página de login
+                    window.location.href = './auth.html';
                 }
             })
             .catch(error => {
-                document.getElementById('message').textContent = 'Erro ao cadastrar usuário.';
+                document.getElementById('message').textContent = 'Erro ao cadastrar usuário. Verifique os dados e tente novamente.';
                 document.getElementById('message').style.color = 'red';
-                console.error(error);
-                window.location.href = './register.html';
+                console.error('Erro:', error);
             });
     }
 </script>
@@ -72,7 +72,7 @@
                             <img class="is-rounded" src="../images/logo.svg" />
                         </figure>
                     </div>
-                    <form class="form_floating" method="POST">
+                    <form class="form_floating">
                         <p class="is-subtitle2 is-p">Preencha os campos abaixo para realizar seu cadastro!</p>
                         <br>
                         <div class="field">
@@ -116,7 +116,7 @@
                         </div>
                         <div class="field">
                             <p class="control">
-                                <button class="button is-success" onclick="redirect_page()">
+                                <button type="button" class="button is-success" onclick="redirect_page(event)">
                                     Cadastrar
                                 </button>
                             </p>
