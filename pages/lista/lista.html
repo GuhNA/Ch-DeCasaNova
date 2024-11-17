@@ -9,20 +9,24 @@
     <link rel="icon" type="image/x-icon" href="../images/logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-6.5.2-web/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 </head>
 <body>
-    <div>
-        <nav class="navbar">
-            <div class="navbar_left">
-                <a href="../../index.html">Página Inicial</a>
-                <a href="./lista.html">Lista</a>
-            </div>
-            <div class="navbar_right">
-                <a href="../auth.html">Entrar</a>
-            </div>
-        </nav>
-    </div>
+        <!-- Cabeçalho e navegação -->
+        <header>
+            <nav class="navbar" role="navigation" aria-label="menu de navegação">
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="../../index.html">Página Inicial</a>
+                        <a class="navbar-item" href="./lista.html">Lista</a>
+                    </div>
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="../auth.html">Entrar</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
     <aside>
         <div id="menuTabela">
             <img id="QrCodeImg">
@@ -49,11 +53,22 @@
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
             <label for="produto">Produto:</label>
-            <input type="text" maxlength="59" id="produto" class="borderEffect" placeholder="Nome do produto"><br>
+            <input type="text" id="produto" class="borderEffect" placeholder="Nome do produto"><br>
+
+            <label for="descricaoProduto">Descrição:</label>
+            <input type="text" id="descricaoProduto" class="borderEffect" placeholder="Descrição do produto"><br>
+
             <label for="imagemProduto">Imagem:</label>
             <input type="file" id="imagemProduto" accept="image/*"><br>
+
+            <label for="imagemPreCadastrada">Imagem Pre-cadastrada:</label>
+            <select id="imagemPreCadastrada">
+                <option value="">Selecione uma imagem</option>
+            </select><br>
+
             <label for="valorProduto">Valor:</label>
             <input type="text" id="valorProduto" class="borderEffect" placeholder="R$ 0,00" oninput="formatarMoeda(this)"><br>
+
             <button id="metamorfo"></button>
             <button onclick="fecharPopup(0)">Fechar</button>
         </div>

@@ -1,3 +1,185 @@
+document.addEventListener("DOMContentLoaded", () => {
+    fetchAvailableProducts();
+});
+
+function fetchAvailableProducts() {
+    const url = "http://localhost:8080/api/housewarming-party/product?status=AVAILABLE&userId=1";
+    axios.get(url)
+        .then(response => {
+            const products = response.data;
+            populateProductTable(products);
+        })
+        .catch(error => {
+            console.error("Erro ao buscar produtos:", error);
+            alert("Erro ao carregar a lista de produtos. Tente novamente mais tarde.");
+        });
+}
+
+function fetchProductDetails(productId) {
+    const url = `http://localhost:8080/api/housewarming-party/product/${productId}`;
+
+    axios.get(url)
+        .then(response => {
+            const product = response.data;
+
+            // Preencher os campos do formulário com os dados do produto
+            document.getElementById("produto").value = product.name;
+            document.getElementById("valorProduto").value = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
+            document.getElementById("descricaoProduto").value = product.description;
+
+            // Carregar a imagem do produto
+            const imgElement = document.getElementById("imagemProduto");
+            imgElement.src = `data:image/png;base64,${product.image.base64}`;
+
+            // Salvar o ID do produto no botão de edição
+            document.getElementById("metamorfo").dataset.productId = product.id;
+            
+            // Aqui você pode carregar a lista de imagens pre-cadastradas para selecionar, se necessário.
+            loadPreloadedImages();
+        })
+        .catch(error => {
+            console.error("Erro ao obter detalhes do produto:", error);
+            alert("Erro ao carregar os detalhes do produto.");
+        });
+}
+
+function populateProductTable(products) {
+    const listaPresente = document.getElementById("listaPresentes");
+    listaPresente.innerHTML = ""; // Limpa a tabela antes de preenchê-la novamente
+
+    products.forEach(product => {
+        const row = listaPresente.insertRow();
+
+        // Coluna da imagem
+        const imgCell = row.insertCell(0);
+        const img = document.createElement("img");
+        img.src = `data:image/png;base64,${product.image.base64}`;
+        img.alt = product.name;
+        img.width = 120;
+        img.height = 120;
+        imgCell.appendChild(img);
+
+        // Coluna do nome
+        const nameCell = row.insertCell(1);
+        nameCell.textContent = product.name;
+
+        // Coluna do preço
+        const priceCell = row.insertCell(2);
+        priceCell.textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
+
+        // Coluna de ações (botões)
+        const actionCell = row.insertCell(3);
+        actionCell.classList.add("action-buttons");
+
+        // Botão Editar
+        const editButton = document.createElement("button");
+        editButton.textContent = "Editar";
+        editButton.className = "button is-info is-small";
+        editButton.onclick = () => abrirPopup(editButton, row); // Reutiliza a lógica existente
+        actionCell.appendChild(editButton);
+
+        // Botão Remover
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remover";
+        removeButton.className = "button is-danger is-small";
+        removeButton.onclick = () => removeProduct(product.id, row); // Chama a função para remover
+        actionCell.appendChild(removeButton);
+    });
+}
+
+function loadPreloadedImages() {
+    const url = "http://localhost:8080/api/housewarming-party/image";
+    const selectElement = document.getElementById("imagemPreCadastrada");
+
+    axios.get(url)
+        .then(response => {
+            const images = response.data;
+            selectElement.innerHTML = ""; // Limpar opções anteriores
+
+            // Adicionar as opções de imagem pre-cadastradas
+            images.forEach(image => {
+                const option = document.createElement("option");
+                option.value = image.id;
+                option.textContent = `Imagem ${image.id}`;
+                selectElement.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Erro ao carregar imagens pre-cadastradas:", error);
+        });
+}
+
+function attPresente(row) {
+    const produtoId = document.getElementById("metamorfo").dataset.productId;
+    const nomeProduto = document.getElementById("produto").value;
+    const valorProduto = parseFloat(document.getElementById("valorProduto").value.replace("R$", "").replace(",", "."));
+    const descricaoProduto = document.getElementById("descricaoProduto").value;
+    const imagemPreCadastrada = document.getElementById("imagemPreCadastrada").value;
+    const imagemProduto = document.getElementById("imagemProduto").files[0];
+
+    let base64Image = null;
+
+    if (imagemProduto) {
+        // Se o usuário fez upload de uma nova imagem
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            base64Image = e.target.result.split(',')[1]; // Pega somente a parte base64 da imagem
+            sendEditRequest();
+        };
+        reader.readAsDataURL(imagemProduto);
+    } else {
+        // Se o usuário selecionou uma imagem pre-cadastrada
+        base64Image = null;
+        sendEditRequest();
+    }
+
+    function sendEditRequest() {
+        const payload = {
+            name: nomeProduto,
+            price: valorProduto,
+            description: descricaoProduto,
+            image: { id: imagemPreCadastrada || null },
+            base64Image: base64Image
+        };
+
+        const url = `http://localhost:8080/api/housewarming-party/product/${produtoId}`;
+
+        axios.put(url, payload)
+            .then(response => {
+                alert("Produto atualizado com sucesso!");
+                // Atualizar a linha na tabela
+                row.cells[1].textContent = nomeProduto;
+                row.cells[2].textContent = `R$ ${valorProduto.toFixed(2).replace('.', ',')}`;
+                row.cells[3].textContent = descricaoProduto;
+
+                if (base64Image) {
+                    row.cells[0].innerHTML = `<img src="data:image/png;base64,${base64Image}" width="120" height="120">`;
+                }
+                fecharPopup();
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar o produto:", error);
+                alert("Erro ao atualizar o produto.");
+            });
+    }
+}
+
+function removeProduct(productId, row) {
+    const url = `http://localhost:8080/api/housewarming-party/product/${productId}`;
+
+    if (confirm("Tem certeza de que deseja remover este produto?")) {
+        axios.delete(url)
+            .then(() => {
+                alert("Produto removido com sucesso!");
+                row.remove(); // Remove a linha da tabela após sucesso na remoção
+            })
+            .catch(error => {
+                console.error("Erro ao remover o produto:", error);
+                alert("Não foi possível remover o produto. Tente novamente.");
+            });
+    }
+}
+
 
 const listaPresente = document.getElementById("listaPresentes"); //tbody
 
@@ -110,32 +292,43 @@ function addQrCode()
 
 }
 
-function abrirPopup(button, linha) {
-    botao = document.getElementById("metamorfo")
-    if(button.id === "add")
-    {
+function abrirPopup(button, row) {
+    const botao = document.getElementById("metamorfo");
+    const produtoId = row.cells[0].dataset.productId; // Armazena o ID do produto na linha
+
+    if (!produtoId) {
+        console.error("ID do produto não encontrado.");
+    }
+
+    // Se for para adicionar novo produto
+    if (button.id === "add") {
         botao.textContent = "Adicionar";
-        botao.onclick = function()
-        {
+        botao.onclick = function() {
             addPresente();
-        }
+        };
         document.getElementsByClassName("popup-content")[0].style.display = "block";
     }
-    else if(button.id === "QRCODE")
-    {
+    // Se for para adicionar QR Code
+    else if (button.id === "QRCODE") {
         document.getElementsByClassName("popup-content")[1].style.display = "block";
     }
-    else
-    {
+    // Se for para editar o produto
+    else {
+        // Preencher o formulário com os dados do produto
         botao.textContent = "Editar";
-        botao.onclick = function() 
-        {
-            attPresente(linha);
-        }
+        botao.onclick = function() {
+            attPresente(row);
+        };
+
+        // Obter os detalhes do produto
+        fetchProductDetails(produtoId);
+
         document.getElementsByClassName("popup-content")[0].style.display = "block";
     }
+
     document.getElementById('popup').style.display = 'flex';
 }
+
 
 function fecharPopup(index)
 {

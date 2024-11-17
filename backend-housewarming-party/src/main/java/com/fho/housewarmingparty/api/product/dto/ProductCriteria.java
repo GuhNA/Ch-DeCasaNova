@@ -15,4 +15,5 @@ public class ProductCriteria {
     private String description;
     private ProductStatus status;
     private String filter;
+    private Long userId;
 }
