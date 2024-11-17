@@ -25,4 +25,5 @@ public class ProductDTO {
     private String base64Image;
     private ProductStatus status;
     private User user;
+    private Long userId;
 }

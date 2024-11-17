@@ -21,7 +21,7 @@ public class ProductSpecification implements Specification<Product> {
         Predicate predicate = criteriaBuilder.conjunction();
 
         predicate = criteriaBuilder.and(predicate,
-                criteriaBuilder.equal(root.get("user").get("id"), LoggedUser.getLoggedInUserId()));
+                criteriaBuilder.equal(root.get("user").get("id"), criteria.getUserId() == null ? LoggedUser.getLoggedInUserId() : criteria.getUserId()));
 
         if (criteria.getStatus() != null) {
             predicate = criteriaBuilder.and(predicate,

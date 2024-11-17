@@ -1,3 +1,63 @@
+document.addEventListener("DOMContentLoaded", () => {
+    fetchAvailableProducts();
+});
+
+function fetchAvailableProducts() {
+    const url = "http://localhost:8080/api/housewarming-party/product?status=AVAILABLE&userId=1";
+    axios.get(url)
+        .then(response => {
+            const products = response.data;
+            populateProductTable(products);
+        })
+        .catch(error => {
+            console.error("Erro ao buscar produtos:", error);
+            alert("Erro ao carregar a lista de produtos. Tente novamente mais tarde.");
+        });
+}
+
+function populateProductTable(products) {
+    const listaPresente = document.getElementById("listaPresentes");
+    listaPresente.innerHTML = ""; // Limpa a tabela antes de preenchê-la novamente
+
+    products.forEach(product => {
+        const row = listaPresente.insertRow();
+
+        // Coluna da imagem
+        const imgCell = row.insertCell(0);
+        const img = document.createElement("img");
+        img.src = `data:image/png;base64,${product.image.base64}`;
+        img.alt = product.name;
+        img.width = 120;
+        img.height = 120;
+        imgCell.appendChild(img);
+
+        // Coluna do nome
+        const nameCell = row.insertCell(1);
+        nameCell.textContent = product.name;
+
+        // Coluna do preço
+        const priceCell = row.insertCell(2);
+        priceCell.textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
+
+        // Coluna de ações (botões)
+        const actionCell = row.insertCell(3);
+        actionCell.classList.add("action-buttons");
+
+        // Botão Editar
+        const editButton = document.createElement("button");
+        editButton.textContent = "Editar";
+        editButton.className = "button is-info is-small";
+        editButton.onclick = () => abrirPopup(editButton, row); // Reutiliza a lógica existente
+        actionCell.appendChild(editButton);
+
+        // Botão Remover
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remover";
+        removeButton.className = "button is-danger is-small";
+        removeButton.onclick = () => listaPresente.deleteRow(row.rowIndex - 1); // Remove a linha da tabela
+        actionCell.appendChild(removeButton);
+    });
+}
 
 const listaPresente = document.getElementById("listaPresentes"); //tbody
 
