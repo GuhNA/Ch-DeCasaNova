@@ -160,4 +160,9 @@ public class ProductService {
 
         createBatch(products);
     }
+
+    public void deleteById(Long id) {
+        findById(id);
+        repository.deleteById(id);
+    }
 }
