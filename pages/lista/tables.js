@@ -292,42 +292,44 @@ function addQrCode()
 
 }
 
-function abrirPopup(button, row) {
+function abrirPopup(button, row = null) {
     const botao = document.getElementById("metamorfo");
-    const produtoId = row.cells[0].dataset.productId; // Armazena o ID do produto na linha
 
-    if (!produtoId) {
-        console.error("ID do produto não encontrado.");
-    }
-
-    // Se for para adicionar novo produto
+    // Caso seja o botão de adicionar um novo produto
     if (button.id === "add") {
         botao.textContent = "Adicionar";
-        botao.onclick = function() {
+        botao.onclick = function () {
             addPresente();
         };
         document.getElementsByClassName("popup-content")[0].style.display = "block";
-    }
-    // Se for para adicionar QR Code
-    else if (button.id === "QRCODE") {
-        document.getElementsByClassName("popup-content")[1].style.display = "block";
-    }
-    // Se for para editar o produto
-    else {
-        // Preencher o formulário com os dados do produto
-        botao.textContent = "Editar";
-        botao.onclick = function() {
-            attPresente(row);
-        };
+    } 
+    // Caso seja para editar um produto existente
+    else if (row) {
+        const produtoId = row.cells[0].dataset.productId; // Certifique-se de que 'produtoId' esteja definido na célula.
 
-        // Obter os detalhes do produto
-        fetchProductDetails(produtoId);
+        if (!produtoId) {
+            console.error("ID do produto não encontrado.");
+        } else {
+            // Preencher o formulário com os dados do produto
+            botao.textContent = "Editar";
+            botao.onclick = function () {
+                attPresente(row);
+            };
+
+            // Obter os detalhes do produto
+            fetchProductDetails(produtoId);
+        }
 
         document.getElementsByClassName("popup-content")[0].style.display = "block";
+    }
+    // Caso seja para adicionar QR Code
+    else if (button.id === "QRCODE") {
+        document.getElementsByClassName("popup-content")[1].style.display = "block";
     }
 
     document.getElementById('popup').style.display = 'flex';
 }
+
 
 
 function fecharPopup(index)

@@ -51,26 +51,68 @@
         </table>
     </div>
     <div id="popup" class="popup-overlay">
-        <div class="popup-content">
-            <label for="produto">Produto:</label>
-            <input type="text" id="produto" class="borderEffect" placeholder="Nome do produto"><br>
-
-            <label for="descricaoProduto">Descrição:</label>
-            <input type="text" id="descricaoProduto" class="borderEffect" placeholder="Descrição do produto"><br>
-
-            <label for="imagemProduto">Imagem:</label>
-            <input type="file" id="imagemProduto" accept="image/*"><br>
-
-            <label for="imagemPreCadastrada">Imagem Pre-cadastrada:</label>
-            <select id="imagemPreCadastrada">
-                <option value="">Selecione uma imagem</option>
-            </select><br>
-
-            <label for="valorProduto">Valor:</label>
-            <input type="text" id="valorProduto" class="borderEffect" placeholder="R$ 0,00" oninput="formatarMoeda(this)"><br>
-
-            <button id="metamorfo"></button>
-            <button onclick="fecharPopup(0)">Fechar</button>
+        <div class="popup-content box">
+            <!-- Produto -->
+            <div class="field">
+                <label class="label" for="produto">Produto:</label>
+                <div class="control">
+                    <input type="text" id="produto" class="input" placeholder="Nome do produto">
+                </div>
+            </div>
+        
+            <!-- Descrição -->
+            <div class="field">
+                <label class="label" for="descricaoProduto">Descrição:</label>
+                <div class="control">
+                    <input type="text" id="descricaoProduto" class="input" placeholder="Descrição do produto">
+                </div>
+            </div>
+        
+            <!-- Imagem -->
+            <div class="field">
+                <label class="label" for="imagemProduto">Imagem:</label>
+                <div class="file has-name is-info">
+                    <label class="file-label">
+                        <input type="file" id="imagemProduto" class="file-input" accept="image/*">
+                        <span class="file-cta">
+                            <span class="icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                        </span>
+                        <span class="file-name" id="imagemProdutoName">Nenhum arquivo selecionado</span>
+                    </label>
+                </div>
+            </div>
+        
+            <!-- Imagem Pre-cadastrada -->
+            <div class="field">
+                <label class="label" for="imagemPreCadastrada">Imagem Pre-cadastrada:</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select id="imagemPreCadastrada">
+                            <option value="">Selecione uma imagem</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Valor -->
+            <div class="field">
+                <label class="label" for="valorProduto">Valor:</label>
+                <div class="control">
+                    <input type="text" id="valorProduto" class="input" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                </div>
+            </div>
+        
+            <!-- Botões -->
+            <div class="field is-grouped is-justify-content-space-between">
+                <div class="control">
+                    <button id="metamorfo" class="button is-primary">Adicionar</button>
+                </div>
+                <div class="control">
+                    <button onclick="fecharPopup(0)" class="button is-light">Fechar</button>
+                </div>
+            </div>
         </div>
         <div class="popup-content">
             <label for="qrCode">QrCode:</label>

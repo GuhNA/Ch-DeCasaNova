@@ -67,6 +67,7 @@ public class WebSecurityConfig {
                         .requestMatchers(mvcMatcherBuilder.pattern("*/subscribe")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/user")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("product/**")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("image/**")).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling((exceptionHandling) -> exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
