@@ -9,12 +9,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "image", schema = "housewarming_party")
 public class Image {
 
@@ -29,4 +33,8 @@ public class Image {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ImageType type;
+
+    public Image(Long id) {
+        this.id = id;
+    }
 }
