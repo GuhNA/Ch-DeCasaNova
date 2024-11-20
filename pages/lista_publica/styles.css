@@ -187,3 +187,8 @@
         display: flex;
         /* Mostrar a modal quando ativada */
     }
+
+    .product-title {
+        color: black;
+        font-weight: bold;
+    }
