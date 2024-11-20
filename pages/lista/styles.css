@@ -1,6 +1,13 @@
-    td {
+      
+   #listaPresentes td {
         width:300px;
         background-color: #fff;
+        text-align: center;
+        padding-left: 10px;
+    }
+    #listaPresentes .titles
+    {
+        text-align: inherit;
     }
 
     #listaPresentes tr 
@@ -200,4 +207,16 @@
     .product-title {
         color: black;
         font-weight: bold;
+    }
+
+    #listaPresentes .action-buttons
+    {
+        padding-left: 35px;
+        align-content: center;
+    }
+    .button.is-small
+    {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        margin-bottom: 10px;
     }

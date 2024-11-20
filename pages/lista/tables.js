@@ -110,6 +110,7 @@ function populateProductTable(products, showActions = true) {
 
         // Coluna do nome
         const nameCell = row.insertCell(1);
+        nameCell.classList.add("titles");
         nameCell.innerHTML = `<strong class="product-title">${product.name}</strong><br>${product.description.substring(0, 40)}...`;
 
         // Coluna do preço
