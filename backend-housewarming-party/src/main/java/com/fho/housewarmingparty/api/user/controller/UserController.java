@@ -46,10 +46,9 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public String getLoggedUser() {
-        log.info("Getting logged user username.");
-        String username = LoggedUser.getLoggedInUserDetails().getUsername();
-        return "Logged-in User: " + username;
+    public Long getLoggedUser() {
+        log.info("Getting logged user id.");
+        return LoggedUser.getLoggedInUserId();
     }
 
     @Override
