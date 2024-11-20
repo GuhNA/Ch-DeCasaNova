@@ -73,8 +73,7 @@ function populateProductTable(products) {
         nameCell.innerHTML = `${product.name}<br>${product.description.substring(0,40)}...`;
         // Coluna do preço
         const priceCell = row.insertCell(2);
-        priceCell.textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
-
+        priceCell.textContent = `R$ ${formatarMoeda(product.price.toFixed(2).replace('.', ',').toString())}`;
         // Coluna de ações (botões)
         const actionCell = row.insertCell(3);
         actionCell.classList.add("action-buttons");
@@ -118,7 +117,7 @@ function loadPreloadedImages() {
 function attPresente(row) {
     const produtoId = document.getElementById("metamorfo").dataset.productId;
     const nomeProduto = document.getElementById("produto").value;
-    const valorProduto = parseFloat(document.getElementById("valorProduto").value.replace("R$", "").replace(",", "."));
+    const valorProduto = parseFloat(document.getElementById("valorProduto").value.replace("R$", "").replaceAll(".","").replace(",","."));
     const descricaoProduto = document.getElementById("descricaoProduto").value;
     const imagemPreCadastrada = document.getElementById("imagemPreCadastrada").value;
     const imagemProduto = document.getElementById("imagemProduto").files[0];
@@ -153,7 +152,8 @@ function attPresente(row) {
                 alert("Produto atualizado com sucesso!");
                 // Atualizar a linha na tabela
                 row.cells[1].textContent = nomeProduto;
-                row.cells[2].textContent = `R$ ${valorProduto.toFixed(2).replace('.', ',')}`;
+                //row.cells[2].textContent = `R$ ${valorProduto.toFixed(2).replace('.', ',')}`;
+                row.cells[2].textContent = formatarMoeda(valorProduto.toString());
                 row.cells[3].textContent = descricaoProduto;
 
                 if (base64Image) {
@@ -265,8 +265,7 @@ async function addPresente()
     const descricaoProduto = document.getElementById("descricaoProduto").value;
     const imagemPreCadastrada = document.getElementById("imagemPreCadastrada").value;
 
-    const valor = parseFloat(valorProduto.slice(3).replace(".",","));
-    console.log(valor)
+    const valor = parseFloat(valorProduto.slice(3).replaceAll(".","").replace(",","."));
     let base64 = null;
     //Verifica se todos os campos estão preenchidos
     if (valorProduto === "" || nomeProduto === "" || descricaoProduto === "") {
@@ -382,12 +381,6 @@ function abrirPopup(button, row = null) {
     document.getElementById('popup').style.display = 'flex';
 }
 
-function stringToFloat(text)
-{
-    text = text.slice(3)
-    console.log(text)
-}
-
 function fecharPopup(index)
 {
     document.getElementById("produto").value = "";
@@ -400,7 +393,9 @@ function fecharPopup(index)
 
 //Formatando moeda
 function formatarMoeda(input) {
-    let valor = input.value;
+    let valor;
+    if(input.value === undefined) valor = input;
+    else valor = input.value;
 
     //Remove tudo que não é dígito
     valor = valor.replace(/\D/g, "");
@@ -414,4 +409,6 @@ function formatarMoeda(input) {
     
     //Atualiza o valor formatado com símbolo da moeda
     input.value = "R$ " + valor;
+
+    if(input.value === undefined) return valor;
 }
