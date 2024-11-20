@@ -23,6 +23,7 @@ public class ProductDTO {
     private String description;
     private Image image;
     private String base64Image;
+    private String qrCodeImage;
     private ProductStatus status;
     private User user;
     private Long userId;
