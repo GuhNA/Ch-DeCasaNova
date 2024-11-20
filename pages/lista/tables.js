@@ -173,19 +173,6 @@ function removeProduct(productId, row) {
 
 const listaPresente = document.getElementById("listaPresentes"); //tbody
 
-function passarImagem(cell, imagem)
-{
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        cell.innerHTML="";
-        let img = document.createElement("img");
-        img.src = e.target.result;
-        img.width = 120;
-        img.height = 120;
-        cell.appendChild(img);
-    }
-    reader.readAsDataURL(imagem);
-}
 
 /*function addPresente()
 {
@@ -258,31 +245,44 @@ function attPresente(linha)
     document.getElementById('popup').style.display = 'none';
 }*/
 
-function addPresente()
+async function addPresente()
 {
     const imagemProduto= document.getElementById("imagemProduto").files[0];
     const nomeProduto= document.getElementById("produto").value;
     const valorProduto= document.getElementById("valorProduto").value;
     const descricaoProduto = document.getElementById("descricaoProduto").value;
     const imagemPreCadastrada = document.getElementById("imagemPreCadastrada").value;
-    const base64 = null;
 
-    const valor = parseFloat(valorProduto);
+    const valor = parseFloat(valorProduto.slice(3).replace(".",","));
+    console.log(valor)
+    let base64 = null;
     //Verifica se todos os campos estão preenchidos
     if (valorProduto === "" || nomeProduto === "" || descricaoProduto === "") {
         alert("Por favor, preencha todos os campos");
         return;
     }
 
-    if (imagemProduto) {
-        // Se o usuário fez upload de uma nova imagem
+    if (!imagemPreCadastrada && imagemProduto) {
+        try {
+            base64 = await lerImagemBase64(imagemProduto);
+        } catch (error) {
+            console.error("Erro ao processar a imagem:", error);
+            return;
+        }
+    }
+
+function lerImagemBase64(imagemProduto) {
+    return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = function(e) {
-            base64 = e.target.result.split(',')[1]; // Pega somente a parte base64 da imagem
+            resolve(e.target.result.split(',')[1]); // Retorna apenas a parte Base64
         };
-        console.log(base64)
+        reader.onerror = function(err) {
+            reject(err);
+        };
         reader.readAsDataURL(imagemProduto);
-    }
+    });
+}
 
     const payload = 
     {
@@ -290,11 +290,19 @@ function addPresente()
         price: valor,
         description: descricaoProduto,
         image: imagemPreCadastrada ? {id: imagemPreCadastrada} : null,
-        base64Image: "lobomaldito"
+        base64Image: base64
     };
-    console.log(payload);
+
     apiClient.post("/product",payload);
     fetchAvailableProducts();
+
+
+    document.getElementById("produto").value = "";
+    document.getElementById("valorProduto").value = "";
+    document.getElementById("imagemProduto").value = "";
+
+    document.getElementsByClassName("popup-content")[0].style.display ="none";
+    document.getElementById('popup').style.display = 'none';
 }
 
 function addQrCode()
@@ -362,7 +370,11 @@ function abrirPopup(button, row = null) {
     document.getElementById('popup').style.display = 'flex';
 }
 
-
+function stringToFloat(text)
+{
+    text = text.slice(3)
+    console.log(text)
+}
 
 function fecharPopup(index)
 {
