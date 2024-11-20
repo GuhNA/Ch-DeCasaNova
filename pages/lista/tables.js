@@ -2,16 +2,28 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchAvailableProducts();
 });
 
-function fetchAvailableProducts() {
-    apiClient.get("/product?status=AVAILABLE&userId=1")
-        .then(response => {
-            const products = response.data;
-            populateProductTable(products);
-        })
-        .catch(error => {
-            console.error("Erro ao buscar produtos:", error);
-            alert("Erro ao carregar a lista de produtos. Tente novamente mais tarde.");
-        });
+async function getLoggedUserId() {
+    try {
+        const response = await apiClient.get("/user/logged-user");
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar usuário logado:", error);
+        alert("Erro ao obter o usuário logado. Tente novamente mais tarde.");
+    }
+}
+
+async function fetchAvailableProducts() {
+    try {
+        const loggedUserId = await getLoggedUserId();
+        console.log("USUÁRIO LOGADO: ", loggedUserId);
+        
+        const response = await apiClient.get("/product?status=AVAILABLE&userId=" + loggedUserId);
+        const products = response.data;
+        populateProductTable(products);
+    } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+        alert("Erro ao carregar a lista de produtos. Tente novamente mais tarde.");
+    }
 }
 
 function fetchProductDetails(productId) {

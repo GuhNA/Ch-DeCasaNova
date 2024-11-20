@@ -1,6 +1,7 @@
 package com.fho.housewarmingparty.api.user.controller;
 
 import com.fho.housewarmingparty.api.user.dto.UserDTO;
+import com.fho.housewarmingparty.api.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
