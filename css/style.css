@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Javanese Text Regular';
     background-color: #f0f0f0;
     margin: 0;
     padding: 0;
@@ -7,10 +7,35 @@ body {
 
 .columns>div>img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 2rem auto 3rem auto;
     width: 50%;
 
+}
+
+p.my_title {
+    --bulma-title-line-height: none;
+    --bulma-title-color: black;
+    --bulma-subtitle-color: black;
+}
+
+
+div.description {
+    background-color: #d9e0df;
+}
+
+div.guide {
+    background-color: #eff2f2;
+}
+
+div.c_guide>.s_guide {
+    --bulma-strong-color: none;
+    color: #151414;
+}
+
+div.c_guide>.p_guide {
+    --bulma-strong-color: none;
+    color: #151414;
+    margin-bottom: 2rem;
 }
 
 
