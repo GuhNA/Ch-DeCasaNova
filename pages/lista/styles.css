@@ -71,15 +71,16 @@
         text-decoration-skip-ink: none;
     }
 
-    #verPresente
-    {
+    #toggleViewButton {
         left:116px;
         top: 192px;
+        padding-left: 10px;
     }
     #add
     {
         top: 192px;
         left: 10px;
+        padding-left: 10px;
     }
 
     #QRCODE
@@ -96,7 +97,9 @@
     {
         left:218px;
         top: 192px;
+        padding-left: 2px;
     }
+
     #QrCodeImg
     {
         position: absolute;

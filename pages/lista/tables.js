@@ -1,6 +1,30 @@
+let showingUnavailable = true; // Indica o estado atual (false: disponíveis, true: recebidos)
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchAvailableProducts();
 });
+
+async function toggleProductView() {
+    const toggleButton = document.getElementById("toggleViewButton");
+
+    if (!toggleButton) {
+        console.error("Botão de alternância não encontrado!");
+        return;
+    }
+
+    if (showingUnavailable) {
+        // Mostrar produtos disponíveis
+        await fetchAvailableProducts();
+        toggleButton.textContent = "Ver presentes recebidos";
+    } else {
+        // Mostrar produtos recebidos (indisponíveis)
+        await fetchUnavailableProducts();
+        toggleButton.textContent = "Ver presentes disponíveis";
+    }
+
+    // Alternar estado
+    showingUnavailable = !showingUnavailable;
+}
 
 async function getLoggedUserId() {
     try {
