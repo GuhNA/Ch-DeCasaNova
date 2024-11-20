@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cha De Casa Nova</title>
+    <link rel="stylesheet" href="..\..\css\style.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="../images/logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-6.5.2-web/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+</head>
+
+<body>
+    <!-- Cabeçalho e navegação -->
+    <header>
+        <nav class="navbar" role="navigation" aria-label="menu de navegação">
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../../index.html">Página Inicial</a>
+                </div>
+                <div class="navbar-end">
+                    <a class="navbar-item" href="../auth.html">Entrar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div id="lista">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Preço</th>
+                </tr>
+            </thead>
+            <tbody id="listaPresentes"></tbody>
+        </table>
+    </div>
+    <script src="public.js"></script>
+</body>
+
+</html>
