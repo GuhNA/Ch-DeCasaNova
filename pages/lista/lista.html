@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cha De Casa Nova</title>
-    <link rel="stylesheet" href="..\..\css\style.css"/>
-    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="..\..\css\style.css" />
+    <link rel="stylesheet" href="styles.css" />
     <link rel="icon" type="image/x-icon" href="../images/logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-6.5.2-web/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 </head>
+
 <body>
-        <!-- Cabeçalho e navegação -->
-        <header>
-            <nav class="navbar" role="navigation" aria-label="menu de navegação">
-                <div class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item" href="../../index.html">Página Inicial</a>
-                        <a class="navbar-item" href="./lista.html">Lista</a>
-                    </div>
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="../auth.html">Entrar</a>
-                    </div>
+    <!-- Cabeçalho e navegação -->
+    <header>
+        <nav class="navbar" role="navigation" aria-label="menu de navegação">
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../../index.html">Página Inicial</a>
+                    <a class="navbar-item" href="./lista.html">Lista</a>
                 </div>
-            </nav>
-        </header>
+                <div class="navbar-end">
+                    <a class="navbar-item" href="../auth.html">Entrar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
     <aside>
         <div id="menuTabela">
             <img id="QrCodeImg">
             <button id="add" onclick="abrirPopup(this)" class="botaoMenu">Adicionar presente</button>
-            <img src="..\..\images\icon\Plus circle.svg" onclick="document.getElementById('add').click()" alt="Ícone adicionar" class="icon" id="circle">
+            <img src="..\..\images\icon\Plus circle.svg" onclick="document.getElementById('add').click()"
+                alt="Ícone adicionar" class="icon" id="circle">
             <button id="verPresente" class="botaoMenu">Ver presentes recebidos</button>
-            <img src="..\..\images\icon\Heart.svg" onclick="document.getElementById('verPresente').click()" alt="Ícone presentes" class="icon" id="heart">
+            <img src="..\..\images\icon\Heart.svg" onclick="document.getElementById('verPresente').click()"
+                alt="Ícone presentes" class="icon" id="heart">
             <button id="share" class="botaoMenu" onclick="copiarUrlAtual()">Compartilhe com convidados</button>
-            <img src="..\..\images\icon\Link.svg" onclick="document.getElementById('share').click()" alt="Ícone link" class="icon" id="link">
+            <img src="..\..\images\icon\Link.svg" onclick="document.getElementById('share').click()" alt="Ícone link"
+                class="icon" id="link">
         </div>
     </aside>
     <div id="lista">
@@ -50,6 +55,7 @@
             <tbody id="listaPresentes"></tbody>
         </table>
     </div>
+    <!-- Popup -->
     <div id="popup" class="popup-overlay">
         <div class="popup-content box">
             <!-- Produto -->
@@ -59,7 +65,7 @@
                     <input type="text" id="produto" class="input" placeholder="Nome do produto">
                 </div>
             </div>
-        
+
             <!-- Descrição -->
             <div class="field">
                 <label class="label" for="descricaoProduto">Descrição:</label>
@@ -67,7 +73,7 @@
                     <input type="text" id="descricaoProduto" class="input" placeholder="Descrição do produto">
                 </div>
             </div>
-        
+
             <!-- Imagem -->
             <div class="field">
                 <label class="label" for="imagemProduto">Imagem:</label>
@@ -83,27 +89,37 @@
                     </label>
                 </div>
             </div>
-        
-            <!-- Imagem Pre-cadastrada -->
+
+            <!-- Imagem Pré-cadastrada -->
             <div class="field">
-                <label class="label" for="imagemPreCadastrada">Imagem Pre-cadastrada:</label>
+                <label class="label" for="imagemPreCadastrada">Imagem Pré-cadastrada:</label>
                 <div class="control">
                     <div class="select is-fullwidth">
                         <select id="imagemPreCadastrada">
-                            <option value="">Selecione uma imagem</option>
+                            <option value="1" id="1">Fogão Elétrico</option>
+                            <option value="2" id="2">Máquina de Café</option>
+                            <option value="3" id="3">Ventilador</option>
+                            <option value="4" id="4">Liquidificador</option>
+                            <option value="5" id="5">Batedeira</option>
+                            <option value="6" id="6">Máquina de Lavar Roupas</option>
+                            <option value="7" id="7">Micro-ondas</option>
+                            <option value="8" id="8">Panela Elétrica de Arroz</option>
+                            <option value="9" id="9">Ferro de Passar</option>
+                            <option value="10" id="10">Aspirador de Pó</option>
                         </select>
                     </div>
                 </div>
             </div>
-        
+
             <!-- Valor -->
             <div class="field">
                 <label class="label" for="valorProduto">Valor:</label>
                 <div class="control">
-                    <input type="text" id="valorProduto" class="input" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                    <input type="text" id="valorProduto" class="input" placeholder="R$ 0,00"
+                        oninput="formatarMoeda(this)">
                 </div>
             </div>
-        
+
             <!-- Botões -->
             <div class="field is-grouped is-justify-content-space-between">
                 <div class="control">
@@ -121,8 +137,8 @@
             <button onclick="fecharPopup(1)">Fechar</button>
         </div>
     </div>
-    <script src="../auth_req.js"></script>
     <script src="tables.js"></script>
     <script src="qr_code_generator.js"></script>
 </body>
+
 </html>
