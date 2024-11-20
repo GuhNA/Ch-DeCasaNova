@@ -15,14 +15,24 @@ async function getLoggedUserId() {
 async function fetchAvailableProducts() {
     try {
         const loggedUserId = await getLoggedUserId();
-        console.log("USUÁRIO LOGADO: ", loggedUserId);
-        
         const response = await apiClient.get("/product?status=AVAILABLE&userId=" + loggedUserId);
         const products = response.data;
         populateProductTable(products);
     } catch (error) {
         console.error("Erro ao buscar produtos:", error);
         alert("Erro ao carregar a lista de produtos. Tente novamente mais tarde.");
+    }
+}
+
+async function fetchUnavailableProducts() {
+    try {
+        const loggedUserId = await getLoggedUserId();
+        const response = await apiClient.get(`/product?status=UNAVAILABLE&userId=${loggedUserId}`);
+        const products = response.data;
+        populateProductTable(products); // Reutiliza a função existente para preencher a tabela
+    } catch (error) {
+        console.error("Erro ao buscar presentes recebidos:", error);
+        alert("Erro ao carregar os presentes recebidos. Tente novamente mais tarde.");
     }
 }
 
