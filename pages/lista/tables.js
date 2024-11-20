@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function fetchAvailableProducts() {
-    const url = "http://localhost:8080/api/housewarming-party/product?status=AVAILABLE&userId=1";
-    axios.get(url)
+    apiClient.get("/product?status=AVAILABLE&userId=1")
         .then(response => {
             const products = response.data;
             populateProductTable(products);
@@ -16,9 +15,7 @@ function fetchAvailableProducts() {
 }
 
 function fetchProductDetails(productId) {
-    const url = `http://localhost:8080/api/housewarming-party/product/${productId}`;
-
-    axios.get(url)
+    apiClient.get(`/product/${productId}`)
         .then(response => {
             const product = response.data;
 
@@ -88,10 +85,8 @@ function populateProductTable(products) {
 }
 
 function loadPreloadedImages() {
-    const url = "http://localhost:8080/api/housewarming-party/image";
     const selectElement = document.getElementById("imagemPreCadastrada");
-
-    axios.get(url)
+    apiClient.get("/image")
         .then(response => {
             const images = response.data;
             selectElement.innerHTML = ""; // Limpar opções anteriores
@@ -142,9 +137,7 @@ function attPresente(row) {
             base64Image: base64Image
         };
 
-        const url = `http://localhost:8080/api/housewarming-party/product/${produtoId}`;
-
-        axios.put(url, payload)
+        apiClient.put(`/product/${produtoId}`, payload)
             .then(response => {
                 alert("Produto atualizado com sucesso!");
                 // Atualizar a linha na tabela
@@ -165,10 +158,8 @@ function attPresente(row) {
 }
 
 function removeProduct(productId, row) {
-    const url = `http://localhost:8080/api/housewarming-party/product/${productId}`;
-
     if (confirm("Tem certeza de que deseja remover este produto?")) {
-        axios.delete(url)
+        apiClient.delete(`/product/${productId}`)
             .then(() => {
                 alert("Produto removido com sucesso!");
                 row.remove(); // Remove a linha da tabela após sucesso na remoção
