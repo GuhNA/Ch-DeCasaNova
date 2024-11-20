@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function fetchAvailableProducts() {
-    apiClient.get("/product?status=AVAILABLE&userId=2")
+    const url = "http://localhost:8080/api/housewarming-party/product?status=AVAILABLE&userId=1";
+    axios.get(url)
         .then(response => {
             const products = response.data;
             populateProductTable(products);
@@ -15,7 +16,9 @@ function fetchAvailableProducts() {
 }
 
 function fetchProductDetails(productId) {
-    apiClient.get(`/product/${productId}`)
+    const url = `http://localhost:8080/api/housewarming-party/product/${productId}`;
+
+    axios.get(url)
         .then(response => {
             const product = response.data;
 
@@ -84,8 +87,10 @@ function populateProductTable(products) {
 }
 
 function loadPreloadedImages() {
+    const url = "http://localhost:8080/api/housewarming-party/image";
     const selectElement = document.getElementById("imagemPreCadastrada");
-    apiClient.get("/image")
+
+    axios.get(url)
         .then(response => {
             const images = response.data;
             selectElement.innerHTML = ""; // Limpar opções anteriores
@@ -136,7 +141,9 @@ function attPresente(row) {
             base64Image: base64Image
         };
 
-        apiClient.put(`/product/${produtoId}`, payload)
+        const url = `http://localhost:8080/api/housewarming-party/product/${produtoId}`;
+
+        axios.put(url, payload)
             .then(response => {
                 alert("Produto atualizado com sucesso!");
                 // Atualizar a linha na tabela
@@ -157,8 +164,10 @@ function attPresente(row) {
 }
 
 function removeProduct(productId, row) {
+    const url = `http://localhost:8080/api/housewarming-party/product/${productId}`;
+
     if (confirm("Tem certeza de que deseja remover este produto?")) {
-        apiClient.delete(`/product/${productId}`)
+        axios.delete(url)
             .then(() => {
                 alert("Produto removido com sucesso!");
                 row.remove(); // Remove a linha da tabela após sucesso na remoção
@@ -260,12 +269,14 @@ function attPresente(linha)
 
 function addPresente()
 {
+    const url = `http://localhost:8080/api/housewarming-party/product`
+
     const imagemProduto= document.getElementById("imagemProduto").files[0];
     const nomeProduto= document.getElementById("produto").value;
     const valorProduto= document.getElementById("valorProduto").value;
     const descricaoProduto = document.getElementById("descricaoProduto").value;
     const imagemPreCadastrada = document.getElementById("imagemPreCadastrada").value;
-    const base64 = null;
+    let base64 = null;
 
     const valor = parseFloat(valorProduto);
     //Verifica se todos os campos estão preenchidos
@@ -280,20 +291,20 @@ function addPresente()
         reader.onload = function(e) {
             base64 = e.target.result.split(',')[1]; // Pega somente a parte base64 da imagem
         };
-        console.log(base64)
         reader.readAsDataURL(imagemProduto);
     }
 
+    console.log(base64);
     const payload = 
     {
         name: nomeProduto,
         price: valor,
         description: descricaoProduto,
-        image: imagemPreCadastrada ? {id: imagemPreCadastrada} : null,
-        base64Image: "lobomaldito"
+        image: { id: imagemPreCadastrada || null },
+        base64Image: base64
     };
     console.log(payload);
-    apiClient.post("/product",payload);
+    axios.post(url,payload);
     fetchAvailableProducts();
 }
 
