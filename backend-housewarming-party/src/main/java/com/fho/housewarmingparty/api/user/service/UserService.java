@@ -3,6 +3,7 @@ package com.fho.housewarmingparty.api.user.service;
 import static java.lang.String.format;
 
 import com.fho.housewarmingparty.api.configuration.service.ConfigurationService;
+import com.fho.housewarmingparty.api.image.service.ImageService;
 import com.fho.housewarmingparty.api.product.service.ProductService;
 import com.fho.housewarmingparty.api.user.dto.UserDTO;
 import com.fho.housewarmingparty.api.user.entity.User;
@@ -29,14 +30,16 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final ConfigurationService configurationService;
     private final ProductService productService;
+    private final ImageService imageService;
     private final UserMapper mapper;
 
-    public UserService(MessageSource messageSource, UserRepository repository, PasswordEncoder passwordEncoder, @Lazy ConfigurationService configurationService,  @Lazy ProductService productService, UserMapper mapper) {
+    public UserService(MessageSource messageSource, UserRepository repository, PasswordEncoder passwordEncoder, @Lazy ConfigurationService configurationService, @Lazy ProductService productService, ImageService imageService, UserMapper mapper) {
         this.messageSource = messageSource;
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.configurationService = configurationService;
         this.productService = productService;
+        this.imageService = imageService;
         this.mapper = mapper;
     }
 
@@ -50,6 +53,7 @@ public class UserService {
 
         User user = repository.save(entity);
 
+        imageService.createDefaultImages();
         configurationService.createDefaultConfiguration(user, dto.getPixKey());
         productService.createDefaultProducts(user);
 

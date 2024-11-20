@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function fetchAvailableProducts() {
-    apiClient.get("/product?status=AVAILABLE&userId=2")
+    apiClient.get("/product?status=AVAILABLE&userId=1")
         .then(response => {
             const products = response.data;
             populateProductTable(products);
@@ -288,7 +288,7 @@ function lerImagemBase64(imagemProduto) {
         name: nomeProduto,
         price: valor,
         description: descricaoProduto,
-        image: imagemPreCadastrada ? {id: imagemPreCadastrada} : null,
+        image: imagemPreCadastrada && imagemPreCadastrada != ""  ? {id: imagemPreCadastrada} : null,
         base64Image: base64
     };
 
