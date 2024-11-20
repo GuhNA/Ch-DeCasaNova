@@ -192,3 +192,11 @@
         color: black;
         font-weight: bold;
     }
+
+    #listaPresentes tr {
+        margin-bottom: 10px; /* Espaçamento entre as linhas */
+    }
+    
+    #listaPresentes tr:not(:last-child) {
+        border-bottom: 10px solid #ffffff; /* Linha separadora opcional */
+    }
