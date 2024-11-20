@@ -73,7 +73,7 @@ function fetchProductDetails(productId) {
 
             // Preencher os campos do formulário com os dados do produto
             document.getElementById("produto").value = product.name;
-            document.getElementById("valorProduto").value = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
+            document.getElementById("valorProduto").value = `R$ ${formatarMoeda(product.price.toFixed(2).replace('.', ',').toString())}`;
             document.getElementById("descricaoProduto").value = product.description;
 
             // Carregar a imagem do produto
@@ -84,7 +84,7 @@ function fetchProductDetails(productId) {
             document.getElementById("metamorfo").dataset.productId = product.id;
             
             // Aqui você pode carregar a lista de imagens pre-cadastradas para selecionar, se necessário.
-            loadPreloadedImages();
+            // loadPreloadedImages();
         })
         .catch(error => {
             console.error("Erro ao obter detalhes do produto:", error);
@@ -98,7 +98,7 @@ function populateProductTable(products, showActions = true) {
 
     products.forEach(product => {
         const row = listaPresente.insertRow();
-
+        row.dataset.productId = product.id;
         // Coluna da imagem
         const imgCell = row.insertCell(0);
         const img = document.createElement("img");
@@ -187,23 +187,24 @@ function attPresente(row) {
             name: nomeProduto,
             price: valorProduto,
             description: descricaoProduto,
-            image: { id: imagemPreCadastrada || null },
+            image: imagemPreCadastrada && imagemPreCadastrada != ""  ? {id: imagemPreCadastrada} : null,
             base64Image: base64Image
         };
+        console.log(payload);
 
         apiClient.put(`/product/${produtoId}`, payload)
             .then(response => {
                 alert("Produto atualizado com sucesso!");
                 // Atualizar a linha na tabela
-                row.cells[1].textContent = nomeProduto;
+                row.cells[1].innerHTML = `${nomeProduto}<br>${descricaoProduto.substring(0, 40)}...`;
                 //row.cells[2].textContent = `R$ ${valorProduto.toFixed(2).replace('.', ',')}`;
-                row.cells[2].textContent = formatarMoeda(valorProduto.toString());
-                row.cells[3].textContent = descricaoProduto;
-
+                row.cells[2].textContent = `R$ ${formatarMoeda(valorProduto.toString())}`;
+                
                 if (base64Image) {
+                    console.log("entrei")
                     row.cells[0].innerHTML = `<img src="data:image/png;base64,${base64Image}" width="120" height="120">`;
                 }
-                fecharPopup();
+                fecharPopup(0);
             })
             .catch(error => {
                 console.error("Erro ao atualizar o produto:", error);
@@ -388,7 +389,6 @@ function addQrCode()
 
 function abrirPopup(button, row = null) {
     const botao = document.getElementById("metamorfo");
-
     // Caso seja o botão de adicionar um novo produto
     if (button.id === "add") {
         botao.textContent = "Adicionar";
@@ -396,30 +396,26 @@ function abrirPopup(button, row = null) {
             addPresente();
         };
         document.getElementsByClassName("popup-content")[0].style.display = "block";
-    } 
-    // Caso seja para editar um produto existente
-    else if (row) {
-        console.log(row)
-        const produtoId = row.cells[0].dataset.productId; // Certifique-se de que 'produtoId' esteja definido na célula.
-
-        if (!produtoId) {
-            console.error("ID do produto não encontrado.");
-        } else {
-            // Preencher o formulário com os dados do produto
-            botao.textContent = "Editar";
-            botao.onclick = function () {
-                attPresente(row);
-            };
-
-            // Obter os detalhes do produto
-            fetchProductDetails(produtoId);
-        }
-
-        document.getElementsByClassName("popup-content")[0].style.display = "block";
-    }
+    }     
     // Caso seja para adicionar QR Code
     else if (button.id === "QRCODE") {
         document.getElementsByClassName("popup-content")[1].style.display = "block";
+    }
+    else {
+        // Preencher o formulário com os dados do produto
+        botao.textContent = "Editar";
+        botao.onclick = function () {
+            attPresente(row);
+        };
+
+        const produtoId = row.dataset.productId; // Certifique-se de que 'produtoId' esteja definido na célula.
+
+        if (!produtoId) {
+            console.error("ID do produto não encontrado.");
+        }
+        else fetchProductDetails(produtoId);
+
+        document.getElementsByClassName("popup-content")[0].style.display = "block";
     }
 
     document.getElementById('popup').style.display = 'flex';
