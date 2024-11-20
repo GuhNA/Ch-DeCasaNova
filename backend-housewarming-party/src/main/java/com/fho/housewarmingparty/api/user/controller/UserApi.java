@@ -35,7 +35,7 @@ public interface UserApi {
 
     @GetMapping("/logged-user")
     @Operation(summary = "Get logged user", description = "Returns the logged user username")
-    String getLoggedUser();
+    Long getLoggedUser();
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
