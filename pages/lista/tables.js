@@ -15,21 +15,27 @@ async function getLoggedUserId() {
 async function fetchAvailableProducts() {
     try {
         const loggedUserId = await getLoggedUserId();
-        const response = await apiClient.get("/product?status=AVAILABLE&userId=" + loggedUserId);
+        const response = await apiClient.get(`/product?status=AVAILABLE&userId=${loggedUserId}`);
         const products = response.data;
-        populateProductTable(products);
+
+        // Preenche a tabela com os botões de ação
+        populateProductTable(products, true);
     } catch (error) {
-        console.error("Erro ao buscar produtos:", error);
-        alert("Erro ao carregar a lista de produtos. Tente novamente mais tarde.");
+        console.error("Erro ao buscar presentes disponíveis:", error);
+        alert("Erro ao carregar os presentes disponíveis. Tente novamente mais tarde.");
     }
 }
 
 async function fetchUnavailableProducts() {
     try {
         const loggedUserId = await getLoggedUserId();
+        console.log("USUÁRIO LOGADO: ", loggedUserId);
+
         const response = await apiClient.get(`/product?status=UNAVAILABLE&userId=${loggedUserId}`);
         const products = response.data;
-        populateProductTable(products); // Reutiliza a função existente para preencher a tabela
+
+        // Preenche a tabela sem os botões de ação
+        populateProductTable(products, false);
     } catch (error) {
         console.error("Erro ao buscar presentes recebidos:", error);
         alert("Erro ao carregar os presentes recebidos. Tente novamente mais tarde.");
@@ -62,7 +68,7 @@ function fetchProductDetails(productId) {
         });
 }
 
-function populateProductTable(products) {
+function populateProductTable(products, showActions = true) {
     const listaPresente = document.getElementById("listaPresentes");
     listaPresente.innerHTML = ""; // Limpa a tabela antes de preenchê-la novamente
 
@@ -80,27 +86,31 @@ function populateProductTable(products) {
 
         // Coluna do nome
         const nameCell = row.insertCell(1);
-        nameCell.innerHTML = `${product.name}<br>${product.description.substring(0,40)}...`;
+        nameCell.innerHTML = `${product.name}<br>${product.description.substring(0, 40)}...`;
+
         // Coluna do preço
         const priceCell = row.insertCell(2);
         priceCell.textContent = `R$ ${formatarMoeda(product.price.toFixed(2).replace('.', ',').toString())}`;
-        // Coluna de ações (botões)
-        const actionCell = row.insertCell(3);
-        actionCell.classList.add("action-buttons");
 
-        // Botão Editar
-        const editButton = document.createElement("button");
-        editButton.textContent = "Editar";
-        editButton.className = "button is-info is-small";
-        editButton.onclick = () => abrirPopup(editButton, row); // Reutiliza a lógica existente
-        actionCell.appendChild(editButton);
+        // Coluna de ações (botões), somente se showActions for true
+        if (showActions) {
+            const actionCell = row.insertCell(3);
+            actionCell.classList.add("action-buttons");
 
-        // Botão Remover
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Remover";
-        removeButton.className = "button is-danger is-small";
-        removeButton.onclick = () => removeProduct(product.id, row); // Chama a função para remover
-        actionCell.appendChild(removeButton);
+            // Botão Editar
+            const editButton = document.createElement("button");
+            editButton.textContent = "Editar";
+            editButton.className = "button is-info is-small";
+            editButton.onclick = () => abrirPopup(editButton, row); // Reutiliza a lógica existente
+            actionCell.appendChild(editButton);
+
+            // Botão Remover
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remover";
+            removeButton.className = "button is-danger is-small";
+            removeButton.onclick = () => removeProduct(product.id, row); // Chama a função para remover
+            actionCell.appendChild(removeButton);
+        }
     });
 }
 
