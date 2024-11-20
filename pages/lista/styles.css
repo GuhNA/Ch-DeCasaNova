@@ -3,6 +3,14 @@
         background-color: #fff;
     }
 
+    #listaPresentes tr 
+    {
+       margin-bottom: 10px;
+    }
+    #listaPresentes tr:not(:last-child)
+    {
+        border-bottom: 10px solid #ffffff;
+    }
     /* Menu de configuracao */
     #menuTabela
     {
