@@ -69,29 +69,62 @@ function populateProductTable(products) {
 
         // Coluna do nome
         const nameCell = row.insertCell(1);
-        nameCell.innerHTML = `${product.name}<br>${product.description.substring(0,40)}...`;
+        nameCell.innerHTML = `${product.name}<br>${product.description.substring(0, 40)}...`;
+
         // Coluna do preço
         const priceCell = row.insertCell(2);
         priceCell.textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
 
-        //// Coluna de ações (botões)
-        //const actionCell = row.insertCell(3);
-        //actionCell.classList.add("action-buttons");
-        //
-        //// Botão Editar
-        //const editButton = document.createElement("button");
-        //editButton.textContent = "Editar";
-        //editButton.className = "button is-info is-small";
-        //editButton.onclick = () => abrirPopup(editButton, row); // Reutiliza a lógica existente
-        //actionCell.appendChild(editButton);
-        //
-        //// Botão Remover
-        //const removeButton = document.createElement("button");
-        //removeButton.textContent = "Remover";
-        //removeButton.className = "button is-danger is-small";
-        //removeButton.onclick = () => removeProduct(product.id, row); // Chama a função para remover
-        //actionCell.appendChild(removeButton);
+        // Coluna de ações (botões)
+        const actionCell = row.insertCell(3);
+        const viewQrCodeButton = document.createElement("button");
+        viewQrCodeButton.textContent = "Ver QR Code";
+        viewQrCodeButton.className = "button is-primary is-small";
+        viewQrCodeButton.onclick = () => openProductModal(product.id);
+        actionCell.appendChild(viewQrCodeButton);
     });
+}
+
+function openProductModal(productId) {
+    const modal = document.getElementById("productModal");
+    const qrCodeImage = document.getElementById("modalQrCode");
+    const presentarButton = document.getElementById("presentarButton");
+
+    // Obter o QR Code do produto
+    apiClient.get(`/product/${productId}`)
+        .then(response => {
+            const product = response.data;
+            qrCodeImage.src = `data:image/png;base64,${product.qrCodeImage}`;
+            modal.classList.add("is-active");
+
+            // Configurar ação do botão "Presentear"
+            presentarButton.onclick = () => donateProduct(productId);
+        })
+        .catch(error => {
+            console.error("Erro ao carregar o QR Code:", error);
+            alert("Não foi possível carregar o QR Code. Tente novamente mais tarde.");
+        });
+
+    // Configurar ação do botão "Cancelar"
+    const cancelButton = document.getElementById("cancelButton");
+    cancelButton.onclick = () => modal.classList.remove("is-active");
+
+    // Fechar ao clicar no 'X' ou fora da modal
+    modal.querySelector(".modal-close").onclick = () => modal.classList.remove("is-active");
+    modal.querySelector(".modal-background").onclick = () => modal.classList.remove("is-active");
+}
+
+function donateProduct(productId) {
+    apiClient.put(`/product/${productId}/donate`)
+        .then(() => {
+            alert("Produto presenteado com sucesso!");
+            document.getElementById("productModal").classList.remove("is-active");
+            fetchAvailableProducts(); 
+        })
+        .catch(error => {
+            console.error("Erro ao presentear o produto:", error);
+            alert("Erro ao processar o presente. Tente novamente mais tarde.");
+        });
 }
 
 function loadPreloadedImages() {

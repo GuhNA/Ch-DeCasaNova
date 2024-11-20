@@ -1,11 +1,10 @@
     td {
-        width:300px;
+        width: 300px;
         background-color: #fff;
     }
 
     /* Menu de configuracao */
-    #menuTabela
-    {
+    #menuTabela {
         position: absolute;
         width: 313px;
         height: 313px;
@@ -20,8 +19,7 @@
     }
 
     /*Div da lista de presente*/
-    #lista
-    {
+    #lista {
         position: absolute;
         width: 650px;
         height: 772px;
@@ -37,8 +35,7 @@
 
     }
 
-    .icon
-    {
+    .icon {
         position: absolute;
         width: 20px;
         height: 20px;
@@ -49,10 +46,9 @@
         opacity: 0px;
     }
 
-    .botaoMenu
-    {
+    .botaoMenu {
         display: flex;
-        position: absolute; 
+        position: absolute;
         width: 86px;
         height: 82px;
         gap: 0px;
@@ -71,19 +67,17 @@
         text-decoration-skip-ink: none;
     }
 
-    #verPresente
-    {
-        left:116px;
+    #verPresente {
+        left: 116px;
         top: 192px;
     }
-    #add
-    {
+
+    #add {
         top: 192px;
         left: 10px;
     }
 
-    #QRCODE
-    {
+    #QRCODE {
         width: 266px;
         height: 149px;
         top: 20px;
@@ -92,20 +86,20 @@
         padding-left: 15px;
     }
 
-    #share
-    {
-        left:218px;
+    #share {
+        left: 218px;
         top: 192px;
     }
-    #QrCodeImg
-    {
+
+    #QrCodeImg {
         position: absolute;
-        top:30px;
-        left:95px;
+        top: 30px;
+        left: 95px;
         height: 121px;
-        object-fit: contain; 
+        object-fit: contain;
         display: block;
     }
+
     #lista th {
         color: #000000;
         padding: 12px 20px;
@@ -114,54 +108,52 @@
 
     table img {
         max-width: 169px;
-        max-height: 120px; 
-        object-fit: contain; 
-        display: block;    
-        margin: 0 auto; 
+        max-height: 120px;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
     }
 
     h1 {
-    text-align: center;
+        text-align: center;
     }
 
     input {
-    width: 80%;
-    padding: 8px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: center;
-    transition: 1s;
-    }
-
-    .borderEffect:hover 
-    {
-        border:1px solid black;
+        width: 80%;
+        padding: 8px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        align-items: center;
+        justify-content: center;
         transition: 1s;
     }
 
-    #edit
-    {
+    .borderEffect:hover {
+        border: 1px solid black;
+        transition: 1s;
+    }
+
+    #edit {
         width: 24px;
         height: 24px;
-        top:131px;
-        left:256px;
+        top: 131px;
+        left: 256px;
     }
-    #heart
-    {
-        top:201px;
+
+    #heart {
+        top: 201px;
         left: 124px;
     }
-    #circle
-    {
-        top:201px;
-        left:16px;
+
+    #circle {
+        top: 201px;
+        left: 16px;
     }
-    #link
-    {
-        top:201px;
-        left:226px;
+
+    #link {
+        top: 201px;
+        left: 226px;
     }
 
     .popup-overlay {
@@ -171,7 +163,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); 
+        background-color: rgba(0, 0, 0, 0.5);
         justify-content: center;
         align-items: center;
     }
@@ -184,4 +176,14 @@
         width: 800px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         text-align: center;
+    }
+
+    .modal {
+        display: none;
+        /* Modal escondida por padrão */
+    }
+
+    .modal.is-active {
+        display: flex;
+        /* Mostrar a modal quando ativada */
     }
