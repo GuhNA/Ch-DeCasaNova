@@ -77,6 +77,7 @@ function populateProductTable(products) {
 
         // Coluna de ações (botões)
         const actionCell = row.insertCell(3);
+        actionCell.className = "align-content-center"
         const viewQrCodeButton = document.createElement("button");
         viewQrCodeButton.textContent = "Ver QR Code";
         viewQrCodeButton.className = "button is-primary is-small";

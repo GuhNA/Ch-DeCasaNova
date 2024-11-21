@@ -20,19 +20,17 @@
 
     /*Div da lista de presente*/
     #lista {
-        position: absolute;
-        width: 650px;
-        height: 772px;
-        top: 210px;
-        left: 811px;
-        gap: 0px;
-        border-radius: 30px;
-        border: 1px;
-        opacity: 0px;
-        border: 1px solid #000000;
-        background: #EFF2F2;
-
-
+        /*position: absolute;*/
+        /*width: 650px;*/
+        /*height: 772px;*/
+        /*top: 210px;*/
+        /*left: 811px;*/
+        /*gap: 0px;*/
+        /*border-radius: 30px;*/
+        /*border: 1px;*/
+        /*opacity: 0px;*/
+        /*border: 1px solid #000000;*/
+        /*background: #EFF2F2;*/
     }
 
     .icon {
@@ -196,7 +194,64 @@
     #listaPresentes tr {
         margin-bottom: 10px; /* Espaçamento entre as linhas */
     }
-    
+
     #listaPresentes tr:not(:last-child) {
         border-bottom: 10px solid #ffffff; /* Linha separadora opcional */
+    }
+
+    .main-content {
+        margin: 0;
+        display: flex;
+        margin-top: 8px;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f5f5f5;
+    }
+
+    /* Card Style */
+    #lista {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 95%;
+        width: 60%; /* Fixed width for larger screens */
+        margin: auto;
+        text-align: center;
+        overflow-x: auto; /* Scroll for smaller screens */
+    }
+
+    .align-content-center {
+        align-content: center;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 0px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 780px) {
+        #lista {
+            width: 95%;
+        }
+
+        table {
+            font-size: 14px; /* Smaller text for narrow screens */
+        }
     }

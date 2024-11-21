@@ -28,23 +28,26 @@
             </div>
         </nav>
     </header>
-    <div id="lista">
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">Produto</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Preço</th>
-                </tr>
-            </thead>
-            <tbody id="listaPresentes"></tbody>
-        </table>
+    <div class="main-content">
+        <div id="lista">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="listaPresentes"></tbody>
+            </table>
+        </div>
     </div>
     <div id="productModal" class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
             <div class="box">
-                <figure class="image is-4by3">
+                <figure class="image">
                     <img id="modalQrCode" src="" alt="QR Code do produto">
                 </figure>
                 <div class="buttons mt-3">
