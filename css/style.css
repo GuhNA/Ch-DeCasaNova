@@ -44,8 +44,11 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #333;
-    color: #fff;
+
+}
+
+.navbar-menu {
+    display: flex !important;
 }
 
 nav img {
@@ -62,7 +65,7 @@ nav img {
     padding: 5px 10px;
     margin: 0px 15px;
     font-size: 20px;
-    background-color: #e7d7ee;
+    background-color: #e9dfee;
     border-radius: 10px;
     color: #2e2b2b;
     text-decoration: none;
@@ -77,7 +80,7 @@ nav img {
     padding: 5px 10px;
     margin: 0px 15px;
     font-size: 20px;
-    background-color: #e7d7ee;
+    background-color: #8AB5AD;
     border-radius: 10px;
     color: #2e2b2b;
     text-decoration: none;
